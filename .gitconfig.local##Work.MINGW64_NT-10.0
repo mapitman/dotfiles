@@ -1,0 +1,8 @@
+[user]
+	email = mark.pitman@gettyimages.com
+    name = Mark Pitman
+[mergetool "kdiff3"]
+	cmd = \"C:\\\\Program Files\\\\KDiff3\\\\kdiff3\" $BASE $LOCAL $REMOTE -o $MERGED
+[core]
+	fscache = true
+	preloadindex = true

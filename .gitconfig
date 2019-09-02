@@ -1,0 +1,14 @@
+[commit]
+    template = ~/.git-commit-template
+[core]
+    editor = vim -c'norm! ggj'
+	preloadindex = true
+	fscache = true
+[gc]
+	auto = 256
+[include]
+    path = .gitconfig.local
+[merge]
+	tool = kdiff3
+[alias]
+	graph = log --oneline --graph

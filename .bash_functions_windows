@@ -1,0 +1,33 @@
+ dig () {
+     winpty docker run -it --rm mapitman/linux-tools dig $@
+ }
+ host () {
+     winpty docker run -it --rm mapitman/linux-tools host $@
+ }
+
+ pwgen () {
+     winpty docker run -it --rm  mapitman/linux-tools pwgen "$@"
+ }
+
+ telnet () {
+     winpty docker run -it --rm mapitman/linux-tools telnet "$@";
+ }
+
+ nc () {
+     winpty docker run -it --rm mapitman/linux-tools nc "$@";
+ }
+
+ vs ()
+ {
+     files=(./*.sln)
+     if [ -e ${files[0]} ]
+     then
+         start ${files[0]}
+     else
+         files=(./*.csproj)
+         if [ -e ${files[0]} ]
+         then
+             start ${files[0]}
+         fi
+     fi
+ }

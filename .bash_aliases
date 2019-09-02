@@ -11,6 +11,7 @@ case "$OSTYPE" in
       alias start="xdg-open"
       alias open="xdg-open"
       alias ls='ls --color=auto'
+      alias xclip='xclip -selection clipboard'
       ;;
    darwin*)
       alias start="open"
@@ -31,8 +32,6 @@ alias clear='printf "\33[2J"'
 alias cclear='/usr/bin/clear'
 alias cls='clear'
 alias printenv='printenv | grep -e LS_COLORS -v | sort'
-alias xclip='xclip -selection clipboard'
-alias dotnet="TERM=xterm dotnet"
 alias work='cd ~/src/work && ll'
 alias github='cd ~/src/github && ll'
 alias gitlab='cd ~/src/gitlab && ll'

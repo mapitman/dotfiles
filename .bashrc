@@ -13,6 +13,13 @@ if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
 then
     PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
+
+# Add .dotnet to path
+if ! [[ "$PATH" =~ "$HOME/.dotnet:" ]]
+then
+    PATH="$HOME/.dotnet:$PATH"
+fi
+
 export PATH
 
 # Uncomment the following line if you don't like systemctl's auto-paging feature:

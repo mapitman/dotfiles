@@ -110,7 +110,7 @@ fi
 
 if [ -e ~/.private ]; then source ~/.private; fi
 
-if [ -z "$TMUX" ] || [ -z "$SSH_CLIENT" ] || [ -z "$SSH_TTY" ]
+if [ -z "$TMUX" ] && [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ]
 then
     exec tmux
 fi

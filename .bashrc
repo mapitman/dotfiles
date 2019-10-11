@@ -63,6 +63,7 @@ export GIT_PROMPT_ONLY_IN_REPO=1
 export EDITOR="vim"
 export VISUAL="$EDITOR"
 export _JAVA_AWT_WM_NONREPARENTING=1
+export BAT_THEME=zenburn
 
 # Source other config files
 if [ -e ~/.bash_aliases ]

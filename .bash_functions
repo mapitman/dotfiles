@@ -26,7 +26,7 @@ rider ()
         files=(./*.csproj)
         if [ -e ${files[0]} ]
         then
-            eval $rider ${files[0]} /dev/null 2>&1 &
+            eval $rider ${files[0]} >/dev/null 2>&1 &
         fi
     fi
 }

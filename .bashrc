@@ -20,6 +20,11 @@ then
     PATH="$HOME/.dotnet:$PATH"
 fi
 
+if ! [[ "$PATH" =~ "$HOME/.dotnet/tools" ]]
+then
+    PATH="$PATH:/home/mark/.dotnet/tools"
+fi
+
 export PATH
 
 # Uncomment the following line if you don't like systemctl's auto-paging feature:

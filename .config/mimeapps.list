@@ -44,7 +44,7 @@ application/x-extension-xht=firefox.desktop
 
 [Added Associations]
 image/bmp=eog.desktop;
-image/gif=eog.desktop;
+image/gif=gimp.desktop;eog.desktop;
 image/jpg=eog.desktop;
 image/pjpeg=eog.desktop;
 image/png=eog.desktop;
@@ -64,7 +64,7 @@ image/x-pcx=eog.desktop;
 image/svg+xml=eog.desktop;
 image/svg+xml-compressed=eog.desktop;
 image/vnd.wap.wbmp=eog.desktop;
-text/csv=vscode_vscode.desktop;
+text/csv=code_code.desktop;vscode_vscode.desktop;
 video/x-matroska=vlc.desktop;
 video/mp2t=vlc.desktop;
 application/x-desktop=vscode_vscode.desktop;
@@ -81,3 +81,4 @@ application/xhtml+xml=firefox.desktop;
 application/x-extension-xhtml=firefox.desktop;
 application/x-extension-xht=firefox.desktop;
 application/x-shellscript=vim.desktop;
+application/pdf=libreoffice-draw.desktop;

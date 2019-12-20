@@ -31,3 +31,18 @@
          fi
      fi
  }
+
+authaws () {
+    ~/src/work/mpitman/powershell-aws/AwsCli/bin/authaws $1
+    export AWS_PROFILE="getty-$1"
+    if [[ "$AWS_DEFAULT_REGION" != "" ]]; then 
+        export AWS_DEFAULT_REGION="us-west-2"
+    fi 
+}
+
+sudoaws() {
+    existing_profile=$AWS_PROFILE
+    ~/src/work/mpitman/powershell-aws/AwsCli/bin/sudoaws $1
+    export AWS_PROFILE="$existing_profile-doer-$1"
+}
+

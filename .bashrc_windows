@@ -24,7 +24,7 @@ export INCLUDE="C:\\$WINPROGRAMFILESX86\\Microsoft\ Visual\ Studio\ 14.0\\VC\\IN
 export LIB=C:\\$WINPROGRAMFILESX86\\Windows\ Kits\\NETFXSDK\\4.6.1\\lib\\um\\x86;
 export LIBPATH=C:\\WINDOWS\\Microsoft.NET\\Framework\\v4.0.30319;
 export NETFXSDKDir=C:\\$WINPROGRAMFILESX86\\Windows\ Kits\\NETFXSDK\\4.6.1\\
-export PATH=/c/Programi\ Files/Docker/Docker/Resources/bin/docker:/c/Program\ Files\ \(x86\)/GnuWin32/bin:/c/Users/mpitman/AppData/Local/autojump/bin:/c/Program\ Files\ \(x86\)/Graphviz2.38/bin:$PATH
+export PATH=/c/Programi\ Files/Docker/Docker/Resources/bin/docker:/c/Program\ Files\ \(x86\)/GnuWin32/bin:/c/Users/mpitman/AppData/Local/autojump/bin:/c/Program\ Files\ \(x86\)/Graphviz2.38/bin:$HOME/AppData/Local/Continuum/anaconda3:$PATH
 export VCINSTALLDIR=C:\\$WINPROGRAMFILESX86\\Microsoft\ Visual\ Studio\ 14.0\\VC\\
 export VisualStudioVersion=14.0
 export WindowsLibPath=References\\CommonConfiguration\\Neutral
@@ -36,5 +36,6 @@ fast_git_ps1 ()
 {
     printf -- "$(git branch 2>/dev/null | grep -e '\* ' | sed 's/^..\(.*\)/ [\1] /')"
 }
+#source $HOME/AppData/Local/Continuum/anaconda3/Scripts/activate
 source $HOME/.bash_functions_windows
 

@@ -53,7 +53,7 @@ then
     alias update="sudo snap refresh; sudo apt-get update && sudo apt-get upgrade --with-new-pkgs -y && sudo apt-get autoremove -y"
 elif [ -f "/etc/os-release" ] && grep -Fq "Fedora" /etc/os-release
 then
-    alias update="sudo snap refresh && sudo dnf upgrade -y"
+    alias update="sudo dnf upgrade -y"
 else
     alias update="aurman -Syu --noconfirm"
 fi

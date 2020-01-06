@@ -11,7 +11,7 @@ rider ()
 		    rider=rider64
 			;;
         linux*)
-            rider=`which rider`
+            rider=$HOME/rider/bin/rider.sh
             ;;
 		darwin*)
             rider=/usr/local/bin/rider

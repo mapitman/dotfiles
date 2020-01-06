@@ -64,6 +64,7 @@ then
     alias vault="winpty vault"
     alias mitmproxy='winpty docker run --rm -it -v "~//.mitmproxy:/home/mitmproxy/.mitmproxy" -p 8080:8080 mitmproxy/mitmproxy'
     alias mitmweb='winpty docker run --rm -it -v "~//.mitmproxy:/home/mitmproxy/.mitmproxy" -p 8080:8080 -p 127.0.0.1:8081:8081 mitmproxy/mitmproxy mitmweb --web-iface 0.0.0.0'
+    alias mp=multipass
 fi
 
 alias topten="history | awk '{print $2}' | sort | uniq -c | sort -rn | head -10"

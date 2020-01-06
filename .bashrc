@@ -101,6 +101,11 @@ then
     source /usr/share/autojump/autojump.bash
 fi
 
+if [ -e $HOME/.dotnet ]
+then
+    export DOTNET_ROOT="$HOME/.dotnet"
+fi
+
 source ~/.bash_functions
 
 GOPATH="$HOME/go"

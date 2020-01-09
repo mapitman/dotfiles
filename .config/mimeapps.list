@@ -82,3 +82,4 @@ application/x-extension-xhtml=firefox.desktop;
 application/x-extension-xht=firefox.desktop;
 application/x-shellscript=vim.desktop;
 application/pdf=libreoffice-draw.desktop;
+binary/octet-stream=code.desktop;

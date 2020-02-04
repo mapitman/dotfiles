@@ -53,10 +53,20 @@ case "$OSTYPE" in
         source ~/.bashrc_windows
    	    ;;
    darwin*)
+        if [ -e $HOME/.dotnet ]
+        then
+            export DOTNET_ROOT="$HOME/.dotnet"
+        fi
+
         export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
         ;;
    linux*)
         PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+
+        if [ -e $HOME/.dotnet ]
+        then
+            export DOTNET_ROOT="$HOME/.dotnet"
+        fi
         ;;
 esac
 
@@ -99,11 +109,6 @@ fi
 if [ -e /usr/share/autojump/autojump.bash ]
 then
     source /usr/share/autojump/autojump.bash
-fi
-
-if [ -e $HOME/.dotnet ]
-then
-    export DOTNET_ROOT="$HOME/.dotnet"
 fi
 
 source ~/.bash_functions

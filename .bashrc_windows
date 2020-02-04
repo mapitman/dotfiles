@@ -36,6 +36,6 @@ fast_git_ps1 ()
 {
     printf -- "$(git branch 2>/dev/null | grep -e '\* ' | sed 's/^..\(.*\)/ [\1] /')"
 }
-#source $HOME/AppData/Local/Continuum/anaconda3/Scripts/activate
+
 source $HOME/.bash_functions_windows
 

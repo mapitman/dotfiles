@@ -28,7 +28,7 @@ x-scheme-handler/about=google-chrome.desktop
 x-scheme-handler/unknown=google-chrome.desktop
 inode/directory=org.gnome.Nautilus.desktop
 x-scheme-handler/vscode=Code.desktop
-x-scheme-handler/slack=slack_slack.desktop
+x-scheme-handler/slack=slack.desktop
 video/x-matroska=vlc.desktop
 x-scheme-handler/webcal=google-chrome.desktop
 x-scheme-handler/mailto=google-chrome.desktop
@@ -41,6 +41,8 @@ application/x-extension-shtml=firefox.desktop
 application/xhtml+xml=firefox.desktop
 application/x-extension-xhtml=firefox.desktop
 application/x-extension-xht=firefox.desktop
+x-scheme-handler/web+stellar=keybase.desktop
+x-scheme-handler/keybase=keybase.desktop
 
 [Added Associations]
 image/bmp=eog.desktop;

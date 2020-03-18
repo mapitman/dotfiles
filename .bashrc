@@ -48,6 +48,11 @@ HISTFILESIZE=2000
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
+GOPATH="$HOME/go"
+function _update_ps1() {
+    PS1="$($GOPATH/bin/powerline-go -error $?)"
+}
+
 case "$OSTYPE" in
    msys)
         source ~/.bashrc_windows
@@ -61,7 +66,11 @@ case "$OSTYPE" in
         export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
         ;;
    linux*)
-        PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+        if [[ "$TERM" != "linux" ]] && [[ -f "$GOPATH/bin/powerline-go" ]]; then
+            PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+        else
+            PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+        fi
 
         if [ -e $HOME/.dotnet ]
         then
@@ -85,47 +94,51 @@ then
     source ~/.bash_aliases
 fi
 
-if [ -e ~/.bash-git-prompt/gitprompt.sh ]
-then
-    source ~/.bash-git-prompt/gitprompt.sh
-elif [ -e /usr/lib/bash-git-prompt/gitprompt.sh ]
-then
-    source /usr/lib/bash-git-prompt/gitprompt.sh
-fi
+#if [ -e ~/.bash-git-prompt/gitprompt.sh ]
+#then
+#    source ~/.bash-git-prompt/gitprompt.sh
+#elif [ -e /usr/lib/bash-git-prompt/gitprompt.sh ]
+#then
+#    source /usr/lib/bash-git-prompt/gitprompt.sh
+#fi
 
-if [ -e /usr/share/bash-completion/completions/git ]
+
+
+if [[ -e /usr/share/bash-completion/completions/git ]]
 then
     source /usr/share/bash-completion/completions/git
 fi
 
-if [ -e /usr/share/bash_completion/git-extras ]
+if [[ -e $HOME/.local/etc/bash_completion.d/git-extras ]]
+then
+    source .local/etc/bash_completion.d/git-extras
+elif [[ -e /usr/share/bash_completion/git-extras ]]
 then
     source /usr/share/bash_completion/git-extras
-elif [ -e /etc/bash_completion.d/git-extras ]
+elif [[ -e /etc/bash_completion.d/git-extras ]]
 then
     source /etc/bash_completion.d/git-extras
 fi
 
-if [ -e /usr/share/autojump/autojump.bash ]
+if [[ -e /usr/share/autojump/autojump.bash ]]
 then
     source /usr/share/autojump/autojump.bash
 fi
 
 source ~/.bash_functions
 
-GOPATH="$HOME/go"
-
+# Setup my PATH
 PATH="$PATH:$HOME/bin:/usr/local/go/bin:$GOPATH/bin:$HOME/sdk/flutter/bin:$HOME/sdk/android-studio/bin:/snap/bin"
-
-# Things specific to WSL on Windows
-if uname -a | grep -q Microsoft
+if [[ -d $HOME/.local/bin ]]
 then
-    export DOCKER_HOST=tcp://0.0.0.0:2375
+    PATH="$HOME/.local/bin:$PATH"
 fi
 
-if [ -e ~/.private ]; then source ~/.private; fi
+# Source my file with some private info that I do not want exposed on GitHub
+if [[ -e ~/.private ]]; then source ~/.private; fi
 
-if [ -z "$TMUX" ] && [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ] && [[ $(uname -a | grep -v -q Microsoft) ]]
+# Only start TMUX if it isn't already started, I'm not in an SSH session and not running on WSL
+if [[ -z "$TMUX" ]] && [[ -z "$SSH_CLIENT" ]] && [[ -z "$SSH_TTY" ]] && [[ $(uname -a | grep -v -q microsoft) ]]
 then
     exec tmux
 fi

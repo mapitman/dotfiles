@@ -55,7 +55,13 @@ function _update_ps1() {
 
 case "$OSTYPE" in
    msys)
-        source ~/.bashrc_windows
+        # source ~/.bashrc_windows
+        export $TERM=xterm-256color
+        if [[ "$TERM" != "linux" ]] && [[ -f "$GOPATH/bin/powerline-go" ]]; then
+            PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+        else
+            PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+        fi
    	    ;;
    darwin*)
         if [ -e $HOME/.dotnet ]
@@ -88,12 +94,6 @@ export EDITOR="vim"
 export VISUAL="$EDITOR"
 export _JAVA_AWT_WM_NONREPARENTING=1
 
-# Source other config files
-if [ -e ~/.bash_aliases ]
-then
-    source ~/.bash_aliases
-fi
-
 #if [ -e ~/.bash-git-prompt/gitprompt.sh ]
 #then
 #    source ~/.bash-git-prompt/gitprompt.sh
@@ -125,6 +125,8 @@ then
     source /usr/share/autojump/autojump.bash
 fi
 
+[[ -s AppData/Local/autojump/etc/profile.d/autojump.sh ]] && source AppData/Local/autojump/etc/profile.d/autojump.sh
+
 source ~/.bash_functions
 
 # Setup my PATH
@@ -132,6 +134,72 @@ PATH="$PATH:$HOME/bin:/usr/local/go/bin:$GOPATH/bin:$HOME/sdk/flutter/bin:$HOME/
 if [[ -d $HOME/.local/bin ]]
 then
     PATH="$HOME/.local/bin:$PATH"
+fi
+
+# Aliases
+
+case "$OSTYPE" in
+    msys)
+        alias open="start"
+        alias msbuild='/c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2017/Professional/MSBuild/15.0/Bin/msbuild.exe'
+        alias build="msbuild build.proj"
+        alias b="build"
+        alias cb="git clean -dxf && build"
+        alias gitex='/c/Program\ Files\ \(x86\)/GitExtensions/GitExtensions.exe'
+        alias edit-hosts='vim /C/Windows/System32/drivers/etc/hosts'
+        alias bind="docker run -it --rm mapitman/bind-utils"
+        alias more=less
+   	    ;;
+    linux*)
+        alias start="xdg-open"
+        alias open="xdg-open"
+        alias ls='ls --color=auto'
+        alias xclip='xclip -selection clipboard'
+        ;;
+    darwin*)
+        alias start="open"
+        alias xclip='pbcopy'
+        alias dotnet="TERM=xterm dotnet"
+        ;;
+esac
+
+alias ll="ls -l"
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias bashrc="vim ~/.bashrc && source ~/.bashrc"
+alias functions="vim ~/.bash_functions && source ~/.bash_functions"
+alias h="cd ~"
+alias clear='printf "\33[2J"'
+alias cclear='/usr/bin/clear'
+alias cls='clear'
+alias printenv='printenv | grep -e LS_COLORS -v | sort'
+
+if which bat >/dev/null  2>&1
+then
+    alias cat=bat
+fi
+alias branchowners="git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n"
+alias gosrc="cd $GOPATH/src/"
+alias tf=terraform
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+alias mitmproxy="docker run --rm -it -v ~/.mitmproxy:/home/mitmproxy/.mitmproxy -p 8080:8080 mitmproxy/mitmproxy"
+alias mitmweb="docker run --rm -it -v ~/.mitmproxy:/home/mitmproxy/.mitmproxy -p 8080:8080 -p 8081:8081 mitmproxy/mitmproxy mitmweb --web-iface 0.0.0.0"
+alias topten="history | awk '{print $2}' | sort | uniq -c | sort -rn | head -10"
+alias redis-cli='docker run --rm -it mapitman/redis-cli'
+
+if uname -a | grep -q Microsoft || uname -a | grep -q Ubuntu
+then
+    alias update="sudo snap refresh; sudo apt-get update && sudo apt-get upgrade --with-new-pkgs -y && sudo apt-get autoremove -y"
+elif [ -f "/etc/os-release" ] && grep -Fq "Fedora" /etc/os-release
+then
+    alias update="sudo dnf upgrade -y"
+# else
+#     alias update="aurman -Syu --noconfirm"
 fi
 
 # Source my file with some private info that I do not want exposed on GitHub

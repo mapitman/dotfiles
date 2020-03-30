@@ -48,44 +48,11 @@ HISTFILESIZE=2000
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-GOPATH="$HOME/go"
-function _update_ps1() {
-    PS1="$($GOPATH/bin/powerline-go -error $?)"
-}
-
-case "$OSTYPE" in
-   msys)
-        # source ~/.bashrc_windows
-        export $TERM=xterm-256color
-        if [[ "$TERM" != "linux" ]] && [[ -f "$GOPATH/bin/powerline-go" ]]; then
-            PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
-        else
-            PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-        fi
-   	    ;;
-   darwin*)
-        if [ -e $HOME/.dotnet ]
-        then
-            export DOTNET_ROOT="$HOME/.dotnet"
-        fi
-
-        export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-        ;;
-   linux*)
-        if [[ "$TERM" != "linux" ]] && [[ -f "$GOPATH/bin/powerline-go" ]]; then
-            PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
-        else
-            PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-        fi
-
-        if [ -e $HOME/.dotnet ]
-        then
-            export DOTNET_ROOT="$HOME/.dotnet"
-        fi
-        ;;
-esac
-
-
+# Add DOTNETROOT only if a user installation of .NET Core exists
+if [ -e $HOME/.dotnet ]
+then
+    export DOTNET_ROOT="$HOME/.dotnet"
+fi
 
 # Variables
 
@@ -93,16 +60,50 @@ export GIT_PROMPT_ONLY_IN_REPO=1
 export EDITOR="vim"
 export VISUAL="$EDITOR"
 export _JAVA_AWT_WM_NONREPARENTING=1
+export GOPATH="$HOME/go"
 
-#if [ -e ~/.bash-git-prompt/gitprompt.sh ]
-#then
-#    source ~/.bash-git-prompt/gitprompt.sh
-#elif [ -e /usr/lib/bash-git-prompt/gitprompt.sh ]
-#then
-#    source /usr/lib/bash-git-prompt/gitprompt.sh
-#fi
+function _update_ps1() {
+    PS1="$($GOPATH/bin/powerline-go -error $? -newline -condensed -cwd-mode plain -colorize-hostname)"
+}
+
+fast_git_ps1 ()
+{
+    printf -- "$(git branch 2>/dev/null | grep -e '\* ' | sed 's/^..\(.*\)/ [\1] /')"
+}
+
+case "$OSTYPE" in
+   msys)
+        export $TERM=xterm-256color
+        export TERM=cygwin
+        export WINPROGRAMFILESX86="Program Files (x86)"
+        export PROGRAMFILESX86="Program\ Files\ \(x86\)"
+        export USER=$USERNAME
+        export MSYS=winsymlinks:nativestrict
+   	    ;;
+   darwin*)
+        export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+        ;;
+esac
+
+export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+
+# Windows Terminal is not displaying this right. Will wait and see
+# if anything changes before reenabling it
+# if [[ "$TERM" != "linux" ]] && [[ -f "$GOPATH/bin/powerline-go" ]]; then
+#     PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+# else
+#     PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+# fi
 
 
+
+if [ -e ~/.bash-git-prompt/gitprompt.sh ]
+then
+   source ~/.bash-git-prompt/gitprompt.sh
+elif [ -e /usr/lib/bash-git-prompt/gitprompt.sh ]
+then
+   source /usr/lib/bash-git-prompt/gitprompt.sh
+fi
 
 if [[ -e /usr/share/bash-completion/completions/git ]]
 then
@@ -125,9 +126,14 @@ then
     source /usr/share/autojump/autojump.bash
 fi
 
-[[ -s AppData/Local/autojump/etc/profile.d/autojump.sh ]] && source AppData/Local/autojump/etc/profile.d/autojump.sh
+if [[ -s AppData/Local/autojump/etc/profile.d/autojump.sh ]]
+then
+    source AppData/Local/autojump/etc/profile.d/autojump.sh
+elif [[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]]
+then
+    source $HOME/.autojump/etc/profile.d/autojump.sh
+fi
 
-source ~/.bash_functions
 
 # Setup my PATH
 PATH="$PATH:$HOME/bin:/usr/local/go/bin:$GOPATH/bin:$HOME/sdk/flutter/bin:$HOME/sdk/android-studio/bin:/snap/bin"
@@ -136,7 +142,12 @@ then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-# Aliases
+if [[ -d /usr/local/lib/python3.7/site-packages ]]
+then
+    export PYTHONPATH=/usr/local/lib/python3.7/site-packages
+fi
+
+# Aliases and functions
 
 case "$OSTYPE" in
     msys)
@@ -145,10 +156,42 @@ case "$OSTYPE" in
         alias build="msbuild build.proj"
         alias b="build"
         alias cb="git clean -dxf && build"
-        alias gitex='/c/Program\ Files\ \(x86\)/GitExtensions/GitExtensions.exe'
         alias edit-hosts='vim /C/Windows/System32/drivers/etc/hosts'
         alias bind="docker run -it --rm mapitman/bind-utils"
         alias more=less
+
+        vs ()
+        {
+            files=(./*.sln)
+            if [ -e ${files[0]} ]
+            then
+                start ${files[0]}
+            else
+                files=(./*.csproj)
+                if [ -e ${files[0]} ]
+                then
+                    start ${files[0]}
+                fi
+            fi
+        }
+        dig () {
+            docker run -it --rm mapitman/linux-tools dig $@
+        }
+        host () {
+            docker run -it --rm mapitman/linux-tools host $@
+        }
+
+        pwgen () {
+            docker run -it --rm  mapitman/linux-tools pwgen "$@"
+        }
+
+        telnet () {
+            docker run -it --rm mapitman/linux-tools telnet "$@";
+        }
+
+        nc () {
+            docker run -it --rm mapitman/linux-tools nc "$@";
+        }
    	    ;;
     linux*)
         alias start="xdg-open"
@@ -168,7 +211,6 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias bashrc="vim ~/.bashrc && source ~/.bashrc"
-alias functions="vim ~/.bash_functions && source ~/.bash_functions"
 alias h="cd ~"
 alias clear='printf "\33[2J"'
 alias cclear='/usr/bin/clear'
@@ -198,8 +240,8 @@ then
 elif [ -f "/etc/os-release" ] && grep -Fq "Fedora" /etc/os-release
 then
     alias update="sudo dnf upgrade -y"
-# else
-#     alias update="aurman -Syu --noconfirm"
+else
+    alias update="pacman -Syu --noconfirm"
 fi
 
 # Source my file with some private info that I do not want exposed on GitHub
@@ -211,3 +253,55 @@ then
     exec tmux
 fi
 
+function loadavg() {
+    awk '{ printf("1-minute: %s\n5-minute: %s\n15-minute: %s\n",$1,$2,$3); }' /proc/loadavg
+}
+
+rider ()
+{
+    case "$OSTYPE" in
+        msys)
+            rider=rider64
+        ;;
+        linux*)
+            rider=$HOME/rider/bin/rider.sh
+        ;;
+        darwin*)
+            rider=/usr/local/bin/rider
+        ;;
+    esac
+
+    files=(./*.sln)
+    if [ -e ${files[0]} ]
+    then
+        eval $rider ${files[0]} >/dev/null 2>&1 &
+    else
+        files=(./*.csproj)
+        if [ -e ${files[0]} ]
+        then
+            eval $rider ${files[0]} >/dev/null 2>&1 &
+        fi
+    fi
+}
+
+
+
+if uname -a | grep -q microsoft
+then
+    vs()
+    {
+        vs_command=/mnt/c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2019/Professional/Common7/IDE/devenv.exe
+        files=(./*.sln)
+
+        if [ -e ${files[0]} ]
+        then
+            "$vs_command" ${files[0]} &
+        else
+            files=(./*.csproj)
+            if [ -e ${files[0]} ]
+            then
+                "$vs_comand" ${files[0]} &
+            fi
+        fi
+    }
+fi

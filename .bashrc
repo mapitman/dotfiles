@@ -72,20 +72,25 @@ fast_git_ps1 ()
 }
 
 case "$OSTYPE" in
-   msys)
+    msys)
         export $TERM=xterm-256color
         export TERM=cygwin
         export WINPROGRAMFILESX86="Program Files (x86)"
         export PROGRAMFILESX86="Program\ Files\ \(x86\)"
         export USER=$USERNAME
         export MSYS=winsymlinks:nativestrict
+        export PS1='\[\033]0;$MSYSTEM:\w\007\033[32m\]\u@\h \[\033[01;33m\w$(fast_git_ps1)\033[0m\]
+\$ '
    	    ;;
-   darwin*)
+    darwin*)
         export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+        export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
         ;;
+    linux*)
+        export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 esac
 
-export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+
 
 # Windows Terminal is not displaying this right. Will wait and see
 # if anything changes before reenabling it

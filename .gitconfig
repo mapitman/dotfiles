@@ -4,6 +4,7 @@
     editor = vim -c'norm! ggj'
 	preloadindex = true
 	fscache = true
+	autocrlf = true
 [gc]
 	auto = 256
 [include]

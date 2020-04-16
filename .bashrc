@@ -289,7 +289,10 @@ rider ()
     fi
 }
 
-
+_git_fi ()
+{
+    __gitcomp_nl "$(__git_refs)"
+}
 
 if uname -a | grep -q microsoft
 then

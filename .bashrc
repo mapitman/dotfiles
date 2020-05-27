@@ -73,7 +73,7 @@ fast_git_ps1 ()
 
 case "$OSTYPE" in
     msys)
-        export $TERM=xterm-256color
+        export TERM=xterm-256color
         export TERM=cygwin
         export WINPROGRAMFILESX86="Program Files (x86)"
         export PROGRAMFILESX86="Program\ Files\ \(x86\)"
@@ -226,7 +226,7 @@ if which bat >/dev/null  2>&1
 then
     alias cat=bat
 fi
-alias branchowners="git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n"
+alias branchowners="git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n | grep remotes | grep -v HEAD | grep -v fi | grep -v master"
 alias gosrc="cd $GOPATH/src/"
 alias tf=terraform
 

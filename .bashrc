@@ -117,7 +117,7 @@ fi
 
 if [[ -e $HOME/.local/etc/bash_completion.d/git-extras ]]
 then
-    source .local/etc/bash_completion.d/git-extras
+    source $HOME/.local/etc/bash_completion.d/git-extras
 elif [[ -e /usr/share/bash_completion/git-extras ]]
 then
     source /usr/share/bash_completion/git-extras
@@ -221,6 +221,7 @@ alias clear='printf "\33[2J"'
 alias cclear='/usr/bin/clear'
 alias cls='clear'
 alias printenv='printenv | grep -e LS_COLORS -v | sort'
+alias code=code-insiders
 
 if which bat >/dev/null  2>&1
 then

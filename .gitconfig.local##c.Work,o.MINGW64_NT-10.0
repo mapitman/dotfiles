@@ -6,3 +6,4 @@
 [core]
 	fscache = true
 	preloadindex = true
+    autocrlf = true

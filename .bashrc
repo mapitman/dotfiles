@@ -222,6 +222,8 @@ alias cclear='/usr/bin/clear'
 alias cls='clear'
 alias printenv='printenv | grep -e LS_COLORS -v | sort'
 alias code=code-insiders
+alias wgup='sudo wg-quick up wg0'
+alias wgdown='sudo wg-quick down wg0'
 
 if which bat >/dev/null  2>&1
 then

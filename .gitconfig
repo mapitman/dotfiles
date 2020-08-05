@@ -13,3 +13,6 @@
 	tool = kdiff3
 [alias]
 	graph = log --oneline --graph
+[user]
+	name = Mark Pitman
+	email = mark@pitman.io

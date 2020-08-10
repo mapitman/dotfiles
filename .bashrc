@@ -22,15 +22,18 @@ fi
 
 if ! [[ "$PATH" =~ "$HOME/.dotnet/tools" ]]
 then
-    PATH="$PATH:/home/mark/.dotnet/tools"
+    PATH="$PATH:$HOME/.dotnet/tools"
+fi
+
+if ! [[ "$PATH" =~ "$HOME/.gem/ruby/2.7.0/bin" ]]
+then
+    PATH="$PATH:$HOME/.gem/ruby/2.7.0/bin"
 fi
 
 export PATH
 
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
-
-# User specific aliases and functions
 
 
 # don't put duplicate lines or lines starting with space in the history.
@@ -158,12 +161,14 @@ case "$OSTYPE" in
     msys)
         alias open="start"
         alias msbuild='/c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2017/Professional/MSBuild/15.0/Bin/msbuild.exe'
+        alias winget="pwsh -c /c/Users/mpitman/AppData/Local/Microsoft/WindowsApps/winget"
         alias build="msbuild build.proj"
         alias b="build"
         alias cb="git clean -dxf && build"
         alias edit-hosts='vim /C/Windows/System32/drivers/etc/hosts'
         alias bind="docker run -it --rm mapitman/bind-utils"
         alias more=less
+        alias dotnet="/c/Program\ Files/dotnet/dotnet.exe"
 
         vs ()
         {
@@ -316,3 +321,8 @@ then
         fi
     }
 fi
+
+# Visual Studio complains about TMP, tmp, TEMP and temp all being set
+unset tmp
+unset temp
+

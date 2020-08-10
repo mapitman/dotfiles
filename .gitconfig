@@ -1,3 +1,6 @@
+[user]
+    email = mark@pitman.io
+    name = Mark Pitman
 [commit]
     template = ~/.git-commit-template
 [core]
@@ -13,3 +16,8 @@
 	tool = kdiff3
 [alias]
 	graph = log --oneline --graph
+[pull]
+    rebase = false
+[includeIf "gitdir:~/src/work/"]
+    path = .gitconfig-work
+

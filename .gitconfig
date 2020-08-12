@@ -5,9 +5,8 @@
     template = ~/.git-commit-template
 [core]
     editor = vim -c'norm! ggj'
-	preloadindex = true
-	fscache = true
-	autocrlf = true
+    preloadindex = true
+    fscache = true
 [gc]
 	auto = 256
 [include]
@@ -18,6 +17,8 @@
 	graph = log --oneline --graph
 [pull]
     rebase = false
+[include]
+    path = ~/.gitconfig.local
 [includeIf "gitdir:~/src/work/"]
     path = .gitconfig-work
 

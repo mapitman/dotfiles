@@ -247,24 +247,22 @@ alias mitmweb="docker run --rm -it -v ~/.mitmproxy:/home/mitmproxy/.mitmproxy -p
 alias topten="history | awk '{print $2}' | sort | uniq -c | sort -rn | head -10"
 alias redis-cli='docker run --rm -it mapitman/redis-cli'
 
-if uname -a | grep -q Microsoft || uname -a | grep -q Ubuntu
+# if uname -a | grep -q Microsoft || uname -a | grep -q Ubuntu
+if [ -f "/etc/os-release" ]
 then
-    alias update="sudo snap refresh; sudo apt-get update && sudo apt-get upgrade --with-new-pkgs -y && sudo apt-get autoremove -y"
-elif [ -f "/etc/os-release" ] && grep -Fq "Fedora" /etc/os-release
-then
-    alias update="sudo dnf upgrade -y"
+    if grep -Fiq "ubuntu" /etc/os-release
+    then
+        alias update="sudo snap refresh; sudo apt-get update && sudo apt-get upgrade --with-new-pkgs -y && sudo apt-get autoremove -y"   
+    elif grep -Fiq "fedora" /etc/os-release
+    then 
+        alias update="sudo dnf upgrade -y"
+    fi
 else
     alias update="pacman -Syu --noconfirm"
 fi
 
 # Source my file with some private info that I do not want exposed on GitHub
 if [[ -e ~/.private ]]; then source ~/.private; fi
-
-# Only start TMUX if it isn't already started, I'm not in an SSH session and not running on WSL
-if [[ -z "$TMUX" ]] && [[ -z "$SSH_CLIENT" ]] && [[ -z "$SSH_TTY" ]] && [[ $(uname -a | grep -v -q microsoft) ]]
-then
-    exec tmux
-fi
 
 function loadavg() {
     awk '{ printf("1-minute: %s\n5-minute: %s\n15-minute: %s\n",$1,$2,$3); }' /proc/loadavg
@@ -297,30 +295,25 @@ rider ()
     fi
 }
 
-_git_fi ()
-{
-    __gitcomp_nl "$(__git_refs)"
-}
+# if uname -a | grep -q microsoft
+# then
+#     vs()
+#     {
+#         vs_command=/mnt/c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2019/Professional/Common7/IDE/devenv.exe
+#         files=(./*.sln)
 
-if uname -a | grep -q microsoft
-then
-    vs()
-    {
-        vs_command=/mnt/c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2019/Professional/Common7/IDE/devenv.exe
-        files=(./*.sln)
-
-        if [ -e ${files[0]} ]
-        then
-            "$vs_command" ${files[0]} &
-        else
-            files=(./*.csproj)
-            if [ -e ${files[0]} ]
-            then
-                "$vs_comand" ${files[0]} &
-            fi
-        fi
-    }
-fi
+#         if [ -e ${files[0]} ]
+#         then
+#             "$vs_command" ${files[0]} &
+#         else
+#             files=(./*.csproj)
+#             if [ -e ${files[0]} ]
+#             then
+#                 "$vs_comand" ${files[0]} &
+#             fi
+#         fi
+#     }
+# fi
 
 # Visual Studio complains about TMP, tmp, TEMP and temp all being set
 unset tmp

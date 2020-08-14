@@ -60,6 +60,8 @@ fi
 # Variables
 
 export GIT_PROMPT_ONLY_IN_REPO=1
+export GIT_PROMPT_FETCH_REMOTE_STATUS=0
+export GIT_PROMPT_SHOW_UNTRACKED_FILES=normal
 export EDITOR="vim"
 export VISUAL="$EDITOR"
 export _JAVA_AWT_WM_NONREPARENTING=1
@@ -82,8 +84,9 @@ case "$OSTYPE" in
         export PROGRAMFILESX86="Program\ Files\ \(x86\)"
         export USER=$USERNAME
         export MSYS=winsymlinks:nativestrict
-        export PS1='\[\033]0;$MSYSTEM:\w\007\033[32m\]\u@\h \[\033[01;33m\w$(fast_git_ps1)\033[0m\]
-\$ '
+        #export PS1='\[\033]0;$MSYSTEM:\w\007\033[32m\]\u@\h \[\033[01;33m\w$(fast_git_ps1)\033[0m\]
+#\$ '
+        export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
    	    ;;
     darwin*)
         export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
@@ -92,18 +95,6 @@ case "$OSTYPE" in
     linux*)
         export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 esac
-
-
-
-# Windows Terminal is not displaying this right. Will wait and see
-# if anything changes before reenabling it
-# if [[ "$TERM" != "linux" ]] && [[ -f "$GOPATH/bin/powerline-go" ]]; then
-#     PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
-# else
-#     PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-# fi
-
-
 
 if [ -e ~/.bash-git-prompt/gitprompt.sh ]
 then

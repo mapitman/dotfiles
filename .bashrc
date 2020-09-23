@@ -84,6 +84,7 @@ case "$OSTYPE" in
         export PROGRAMFILESX86="Program\ Files\ \(x86\)"
         export USER=$USERNAME
         export MSYS=winsymlinks:nativestrict
+        export PYTHONPATH=$PYTHONPATH:/usr/lib/python3.8/site-packages
         #export PS1='\[\033]0;$MSYSTEM:\w\007\033[32m\]\u@\h \[\033[01;33m\w$(fast_git_ps1)\033[0m\]
 #\$ '
         export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
@@ -151,7 +152,7 @@ fi
 case "$OSTYPE" in
     msys)
         alias open="start"
-        alias msbuild='/c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2017/Professional/MSBuild/15.0/Bin/msbuild.exe'
+        alias msbuild='/c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2019/Professional/MSBuild/Current/Bin/msbuild.exe'
         alias winget="pwsh -c /c/Users/mpitman/AppData/Local/Microsoft/WindowsApps/winget"
         alias build="msbuild build.proj"
         alias b="build"
@@ -235,7 +236,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 alias mitmproxy="docker run --rm -it -v ~/.mitmproxy:/home/mitmproxy/.mitmproxy -p 8080:8080 mitmproxy/mitmproxy"
 alias mitmweb="docker run --rm -it -v ~/.mitmproxy:/home/mitmproxy/.mitmproxy -p 8080:8080 -p 8081:8081 mitmproxy/mitmproxy mitmweb --web-iface 0.0.0.0"
-alias topten="history | awk '{print $2}' | sort | uniq -c | sort -rn | head -10"
+alias topten="history | awk '{print $2}' | sort | uniq -c | sort -rn | head -n 10"
 alias redis-cli='docker run --rm -it mapitman/redis-cli'
 
 # if uname -a | grep -q Microsoft || uname -a | grep -q Ubuntu

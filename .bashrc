@@ -218,7 +218,6 @@ alias clear='printf "\33[2J"'
 alias cclear='/usr/bin/clear'
 alias cls='clear'
 alias printenv='printenv | grep -e LS_COLORS -v | sort'
-alias code=code-insiders
 alias wgup='sudo wg-quick up wg0'
 alias wgdown='sudo wg-quick down wg0'
 

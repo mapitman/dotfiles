@@ -221,9 +221,12 @@ alias printenv='printenv | grep -e LS_COLORS -v | sort'
 alias wgup='sudo wg-quick up wg0'
 alias wgdown='sudo wg-quick down wg0'
 
-if which bat >/dev/null  2>&1
+if which bat >/dev/null 2>&1 
 then
     alias cat=bat
+elif which batcat >/dev/null 2>&1
+then
+    alias cat=batcat
 fi
 alias branchowners="git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n | grep remotes | grep -v HEAD | grep -v fi | grep -v master"
 alias gosrc="cd $GOPATH/src/"
@@ -310,3 +313,4 @@ rider ()
 unset tmp
 unset temp
 
+export AWS_SDK_LOAD_CONFIG=1

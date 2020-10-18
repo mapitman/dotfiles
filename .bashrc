@@ -243,7 +243,7 @@ if [ -f "/etc/os-release" ]
 then
     if grep -Fiq "ubuntu" /etc/os-release
     then
-        alias update="sudo snap refresh; sudo apt-get update && sudo apt-get upgrade --with-new-pkgs -y && sudo apt-get autoremove -y"   
+        alias update="if type snap 2> /dev/null; then sudo snap refresh; fi; sudo apt-get update && sudo apt-get upgrade --with-new-pkgs -y && sudo apt-get autoremove -y"   
     elif grep -Fiq "fedora" /etc/os-release
     then 
         alias update="sudo dnf upgrade -y"

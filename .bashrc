@@ -250,6 +250,9 @@ then
     elif grep -Fiq "fedora" /etc/os-release
     then 
         alias update="sudo dnf upgrade -y"
+    elif grep -Fiq "arch" /etc/os-release
+    then
+        alias update="yay -Syu --noconfirm"
     fi
 else
     alias update="pacman -Syu --noconfirm"

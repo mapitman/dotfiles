@@ -157,10 +157,12 @@ case "$OSTYPE" in
         alias build="msbuild build.proj"
         alias b="build"
         alias cb="git clean -dxf && build"
-        alias edit-hosts='vim /C/Windows/System32/drivers/etc/hosts'
+        alias edit-hosts='sudo vim /C/Windows/System32/drivers/etc/hosts'
         alias bind="docker run -it --rm mapitman/bind-utils"
         alias more=less
         alias dotnet="/c/Program\ Files/dotnet/dotnet.exe"
+        alias cpawscreds="cp /c/Users/mpitman/.aws/credentials ~/.aws/credentials"
+        alias zoomdetector="pushd ~/src/github/mapitman/pi-ticker && ./zoom-detector.py"
 
         vs ()
         {
@@ -176,6 +178,22 @@ case "$OSTYPE" in
                 fi
             fi
         }
+
+        sudovs ()
+        {
+            files=(./*.sln)
+            if [ -e ${files[0]} ]
+            then
+                sudo start ${files[0]}
+            else
+                files=(./*.csproj)
+                if [ -e ${files[0]} ]
+                then
+                    sudo start ${files[0]}
+                fi
+            fi
+        }
+
         dig () {
             docker run -it --rm mapitman/linux-tools dig $@
         }
@@ -269,7 +287,7 @@ rider ()
 {
     case "$OSTYPE" in
         msys)
-            rider=rider64
+            rider="start rider64"
         ;;
         linux*)
             rider=$HOME/rider/bin/rider.sh

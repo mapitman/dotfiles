@@ -43,13 +43,13 @@ ZSH_THEME="fox"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
+# ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # You can also set it to another string to have that shown instead of the default red dots.
 # e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
 # Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-COMPLETION_WAITING_DOTS="true"
+# COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -72,7 +72,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(autojump docker git-prompt vscode)
+plugins=(autojump zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -308,35 +308,9 @@ rider ()
     fi
 }
 
-# if uname -a | grep -q microsoft
-# then
-#     vs()
-#     {
-#         vs_command=/mnt/c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2019/Professional/Common7/IDE/devenv.exe
-#         files=(./*.sln)
-
-#         if [ -e ${files[0]} ]
-#         then
-#             "$vs_command" ${files[0]} &
-#         else
-#             files=(./*.csproj)
-#             if [ -e ${files[0]} ]
-#             then
-#                 "$vs_comand" ${files[0]} &
-#             fi
-#         fi
-#     }
-# fi
 
 # Visual Studio complains about TMP, tmp, TEMP and temp all being set
 unset tmp
 unset temp
 
 export AWS_SDK_LOAD_CONFIG=1
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-

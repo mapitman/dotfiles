@@ -154,7 +154,7 @@ case "$OSTYPE" in
     msys)
         alias open="start"
         alias msbuild='/c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2019/Professional/MSBuild/Current/Bin/msbuild.exe'
-        alias winget="pwsh -c /c/Users/mpitman/AppData/Local/Microsoft/WindowsApps/winget"
+        alias winget='pwsh -c $LOCALAPPDATA/Microsoft/WindowsApps/winget'
         alias build="msbuild build.proj"
         alias b="build"
         alias cb="git clean -dxf && build"
@@ -162,7 +162,7 @@ case "$OSTYPE" in
         alias bind="docker run -it --rm mapitman/bind-utils"
         alias more=less
         alias dotnet="/c/Program\ Files/dotnet/dotnet.exe"
-        alias cpawscreds="cp /c/Users/mpitman/.aws/credentials ~/.aws/credentials"
+        alias cpawscreds='cp $USERPROFILE/.aws/credentials ~/.aws/credentials'
 
         # https://github.com/mapitman/pi-ticker
         alias zoomdetector="pushd ~/src/github/mapitman/pi-ticker && ./zoom-detector.py"

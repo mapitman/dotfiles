@@ -163,6 +163,8 @@ case "$OSTYPE" in
         alias more=less
         alias dotnet="/c/Program\ Files/dotnet/dotnet.exe"
         alias cpawscreds="cp /c/Users/mpitman/.aws/credentials ~/.aws/credentials"
+
+        # https://github.com/mapitman/pi-ticker
         alias zoomdetector="pushd ~/src/github/mapitman/pi-ticker && ./zoom-detector.py"
 
         vs ()

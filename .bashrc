@@ -126,14 +126,9 @@ then
     source /usr/share/autojump/autojump.bash
 fi
 
-if [[ -s AppData/Local/autojump/etc/profile.d/autojump.sh ]]
-then
-    source AppData/Local/autojump/etc/profile.d/autojump.sh
-elif [[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]]
-then
-    source $HOME/.autojump/etc/profile.d/autojump.sh
-fi
-
+# z - Similar to autojump
+_Z_CMD=j
+. ~/.local/bin/z.sh
 
 # Setup my PATH
 PATH="$PATH:$HOME/bin:/usr/local/go/bin:$GOPATH/bin:$HOME/sdk/flutter/bin:$HOME/sdk/android-studio/bin:/snap/bin"
@@ -163,6 +158,7 @@ case "$OSTYPE" in
         alias dotnet="/c/Program\ Files/dotnet/dotnet.exe"
         alias cpawscreds="cp /c/Users/mpitman/.aws/credentials ~/.aws/credentials"
         alias zoomdetector="pushd ~/src/github/mapitman/pi-ticker && ./zoom-detector.py"
+        alias z="exec zsh"
 
         vs ()
         {

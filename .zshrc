@@ -72,7 +72,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(autojump zsh-autosuggestions docker zsh-syntax-highlighting aws)
+plugins=(zsh-autosuggestions docker zsh-syntax-highlighting aws)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -302,14 +302,14 @@ rider ()
     esac
 
     files=(./*.sln)
-    if [ -e ${files[0]} ]
+    if [ -e ${files[@]:0:1} ]
     then
-        eval $rider ${files[0]} >/dev/null 2>&1 &
+        eval $rider ${files[@]:0:1} >/dev/null 2>&1 &
     else
         files=(./*.csproj)
-        if [ -e ${files[0]} ]
+        if [ -e ${files[@]:0:1} ]
         then
-            eval $rider ${files[0]} >/dev/null 2>&1 &
+            eval $rider ${files[@]:0:1} >/dev/null 2>&1 &
         fi
     fi
 }
@@ -321,12 +321,15 @@ unset temp
 
 export AWS_SDK_LOAD_CONFIG=1
 
-# zsh parameter completion for the dotnet CLI
+# z - Similar to autojump
+# Works better in MSYS2
+_Z_CMD=j
+. ~/.local/bin/z.sh
 
+# zsh parameter completion for the dotnet CLI
 _dotnet_zsh_complete()
 {
   local completions=("$(dotnet complete "$words")")
-
   reply=( "${(ps:\n:)completions}" )
 }
 
@@ -337,8 +340,6 @@ fpath+=$HOME/.zsh/pure
 
 autoload -U promptinit; promptinit
 prompt pure
-
-# zstyle :prompt:pure:path color '#FFFFFF'
 
 autoload -U bashcompinit
 bashcompinit

@@ -99,6 +99,11 @@ then
     PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
 
+if ! [[ "$PATH" =~ "$HOME/go/bin" ]]
+then
+    PATH="$HOME/go/bin:$PATH"
+fi
+
 # Add .dotnet to path
 if ! [[ "$PATH" =~ "$HOME/.dotnet:" ]]
 then
@@ -336,3 +341,4 @@ prompt pure
 
 autoload -U bashcompinit
 bashcompinit
+

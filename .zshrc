@@ -137,7 +137,6 @@ export GOPATH="$HOME/go"
 
 case "$OSTYPE" in
     msys)
-        export TERM=xterm-256color
         export TERM=cygwin
         export WINPROGRAMFILESX86="Program Files (x86)"
         export PROGRAMFILESX86="Program\ Files\ \(x86\)"

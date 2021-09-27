@@ -280,6 +280,10 @@ else
     alias update="pacman -Syu --noconfirm"
 fi
 
+fpath+=$HOME/.zsh/functions
+autoload -Uz compinit && compinit
+
+
 # Source my file with some private info that I do not want exposed on GitHub
 if [[ -e ~/.private ]]; then source ~/.private; fi
 

@@ -331,3 +331,8 @@ unset tmp
 unset temp
 
 export AWS_SDK_LOAD_CONFIG=1
+
+if [[ "$OSTYPE" == "msys" ]]
+then
+    exec zsh
+fi

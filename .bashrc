@@ -306,33 +306,8 @@ rider ()
     fi
 }
 
-# if uname -a | grep -q microsoft
-# then
-#     vs()
-#     {
-#         vs_command=/mnt/c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2019/Professional/Common7/IDE/devenv.exe
-#         files=(./*.sln)
-
-#         if [ -e ${files[0]} ]
-#         then
-#             "$vs_command" ${files[0]} &
-#         else
-#             files=(./*.csproj)
-#             if [ -e ${files[0]} ]
-#             then
-#                 "$vs_comand" ${files[0]} &
-#             fi
-#         fi
-#     }
-# fi
-
 # Visual Studio complains about TMP, tmp, TEMP and temp all being set
 unset tmp
 unset temp
 
 export AWS_SDK_LOAD_CONFIG=1
-
-if [[ "$OSTYPE" == "msys" ]]
-then
-    exec zsh
-fi

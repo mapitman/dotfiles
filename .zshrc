@@ -342,12 +342,15 @@ _dotnet_zsh_complete()
 compctl -K _dotnet_zsh_complete dotnet
 
 # Prompt theme
-# fpath+=$HOME/.zsh/pure
+fpath+=$HOME/.zsh/pure
 
-# autoload -U promptinit; promptinit
-# prompt pure
+autoload -U promptinit; promptinit
+prompt pure
+# HACK to disable setting the terminal title
+prompt_pure_set_title() {}
 
 #autoload -U bashcompinit
 #bashcompinit
 
-source $HOME/.zsh/async-git-prompt.plugin.zsh
+# use this if I'm not goign to use the "pure" prompt
+# source $HOME/.zsh/async-git-prompt.plugin.zsh

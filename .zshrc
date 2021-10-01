@@ -20,8 +20,9 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
-# ZSH_THEME="fox"
+#ZSH_THEME=""
+#ZSH_THEME="robbyrussell"
+ZSH_THEME="fox"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -162,7 +163,7 @@ case "$OSTYPE" in
         alias edit-hosts='sudo vim /C/Windows/System32/drivers/etc/hosts'
         alias bind="docker run -it --rm mapitman/bind-utils"
         alias more=less
-        alias dotnet="/c/Program\ Files/dotnet/dotnet.exe"
+        #alias dotnet="/c/Program\ Files/dotnet/dotnet.exe"
         alias cpawscreds='cp $USERPROFILE/.aws/credentials ~/.aws/credentials'
 
         # https://github.com/mapitman/pi-ticker
@@ -341,11 +342,12 @@ _dotnet_zsh_complete()
 compctl -K _dotnet_zsh_complete dotnet
 
 # Prompt theme
-fpath+=$HOME/.zsh/pure
+# fpath+=$HOME/.zsh/pure
 
-autoload -U promptinit; promptinit
-prompt pure
+# autoload -U promptinit; promptinit
+# prompt pure
 
-autoload -U bashcompinit
-bashcompinit
+#autoload -U bashcompinit
+#bashcompinit
 
+source $HOME/.zsh/async-git-prompt.plugin.zsh

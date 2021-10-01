@@ -23,3 +23,5 @@
 [includeIf "gitdir:~/src/work/"]
     path = .gitconfig-work
 
+[oh-my-zsh]
+	hide-info = 1

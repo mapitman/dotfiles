@@ -85,7 +85,7 @@ ZSH_THEME="fox"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(zsh-autosuggestions docker zsh-syntax-highlighting aws)
+plugins=(zsh-autosuggestions docker zsh-syntax-highlighting aws web-search copybuffer)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -235,7 +235,7 @@ alias ll="ls -l"
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
-alias bashrc="vim ~/.bashrc && source ~/.bashrc"
+alias bashrc="vim ~/.bashrc && exec bash"
 alias h="cd ~"
 alias clear='printf "\33[2J"'
 alias cclear='/usr/bin/clear'
@@ -243,7 +243,7 @@ alias cls='clear'
 alias printenv='printenv | grep -e LS_COLORS -v | sort'
 alias wgup='sudo wg-quick up wg0'
 alias wgdown='sudo wg-quick down wg0'
-alias zshrc="vim ~/.zshrc && source ~/.zshrc"
+alias zshrc="vim ~/.zshrc && omz reload"
 
 if which bat >/dev/null 2>&1 
 then
@@ -284,7 +284,7 @@ fi
 
 fpath+=$HOME/.zsh/functions
 autoload -Uz compinit && compinit
-
+autoload -U +X bashcompinit && bashcompinit
 
 # Source my file with some private info that I do not want exposed on GitHub
 if [[ -e ~/.private ]]; then source ~/.private; fi
@@ -349,8 +349,6 @@ prompt pure
 # HACK to disable setting the terminal title
 prompt_pure_set_title() {}
 
-#autoload -U bashcompinit
-#bashcompinit
 
-# use this if I'm not goign to use the "pure" prompt
+# use this if I'm not going to use the "pure" prompt
 # source $HOME/.zsh/async-git-prompt.plugin.zsh

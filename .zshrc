@@ -307,13 +307,15 @@ rider ()
         ;;
     esac
 
-    files=(./*.sln)
-    if [ -e ${files[@]:0:1} ]
+    files=(./*.sln(N))
+    if [[ -e ${files[@]:0:1} ]]
     then
+        echo "opening ${files[@]:0:1}..."
         eval $rider ${files[@]:0:1} >/dev/null 2>&1 &
     else
-        files=(./*.csproj)
-        if [ -e ${files[@]:0:1} ]
+        files=(./*.csproj(N))
+        echo "opening ${files[@]:0:1}..."
+        if [[ -e ${files[@]:0:1} ]]
         then
             eval $rider ${files[@]:0:1} >/dev/null 2>&1 &
         fi

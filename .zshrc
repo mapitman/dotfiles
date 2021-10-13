@@ -245,10 +245,10 @@ alias wgup='sudo wg-quick up wg0'
 alias wgdown='sudo wg-quick down wg0'
 alias zshrc="vim ~/.zshrc && omz reload"
 
-if which bat >/dev/null 2>&1 
+if [[ -e /usr/bin/bat ]] 
 then
     alias cat=bat
-elif which batcat >/dev/null 2>&1
+elif [[ -e /usr/bin/batcat ]]
 then
     alias cat=batcat
 fi

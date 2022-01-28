@@ -171,30 +171,34 @@ case "$OSTYPE" in
 
         vs ()
         {
-            files=(./*.sln)
-            if [ -e ${files[0]} ]
+            files=(./*.sln(N))
+            if [[ -e ${files[@]:0:1} ]]
             then
-                start ${files[0]}
+                echo "opening ${files[@]:0:1}..."
+                eval start ${files[@]:0:1} >/dev/null 2>&1 &
             else
-                files=(./*.csproj)
-                if [ -e ${files[0]} ]
+                files=(./*.csproj(N))
+                echo "opening ${files[@]:0:1}..."
+                if [[ -e ${files[@]:0:1} ]]
                 then
-                    start ${files[0]}
+                    eval start ${files[@]:0:1} >/dev/null 2>&1 &
                 fi
             fi
         }
 
         sudovs ()
         {
-            files=(./*.sln)
-            if [ -e ${files[0]} ]
+            files=(./*.sln(N))
+            if [[ -e ${files[@]:0:1} ]]
             then
-                sudo start ${files[0]}
+                echo "opening ${files[@]:0:1}..."
+                eval sudo start ${files[@]:0:1} >/dev/null 2>&1 &
             else
-                files=(./*.csproj)
-                if [ -e ${files[0]} ]
+                files=(./*.csproj(N))
+                echo "opening ${files[@]:0:1}..."
+                if [[ -e ${files[@]:0:1} ]]
                 then
-                    sudo start ${files[0]}
+                    eval sudo start ${files[@]:0:1} >/dev/null 2>&1 &
                 fi
             fi
         }
@@ -244,6 +248,7 @@ alias printenv='printenv | grep -e LS_COLORS -v | sort'
 alias wgup='sudo wg-quick up wg0'
 alias wgdown='sudo wg-quick down wg0'
 alias zshrc="vim ~/.zshrc && omz reload"
+alias fix-main="git pull -p && git checkout main && git remote set-head origin -a"
 
 if which bat >/dev/null 2>&1 
 then

@@ -133,6 +133,14 @@ then
     PATH="$PATH:$HOME/.gem/ruby/2.7.0/bin"
 fi
 
+if [[ -e $HOME/.local/share/gem/ruby/3.0.0/bin ]]
+then
+   if ! [[ "$PATH" =~ "$HOME/.local/share/gem/ruby/3.0.0/bin" ]] 
+   then
+       PATH="$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin"
+   fi
+fi
+
 export PATH
 
 # Add DOTNETROOT only if a user installation of .NET Core exists

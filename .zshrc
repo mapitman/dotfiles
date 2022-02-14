@@ -256,7 +256,7 @@ alias printenv='printenv | grep -e LS_COLORS -v | sort'
 alias wgup='sudo wg-quick up wg0'
 alias wgdown='sudo wg-quick down wg0'
 alias zshrc="vim ~/.zshrc && omz reload"
-alias fix-main="git pull -p && git checkout main && git remote set-head origin -a"
+alias fix-main="git pull -p; git checkout main && git remote set-head origin -a"
 
 if which bat >/dev/null 2>&1 
 then

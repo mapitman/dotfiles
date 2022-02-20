@@ -313,7 +313,7 @@ rider ()
             rider="start rider64"
         ;;
         linux*)
-            rider=$HOME/rider/bin/rider.sh
+            rider=/usr/bin/rider
         ;;
         darwin*)
             rider=/usr/local/bin/rider

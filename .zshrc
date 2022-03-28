@@ -380,3 +380,5 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 
 # use this if I'm not going to use the "pure" prompt
 # source $HOME/.zsh/async-git-prompt.plugin.zsh
+alias aa="saml2aws login --skip-prompt; export AWS_PROFILE=shared"
+source /usr/share/nvm/init-nvm.sh

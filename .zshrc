@@ -38,7 +38,7 @@ ZSH_THEME="fox"
 # HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to automatically update without prompting.
 # DISABLE_UPDATE_PROMPT="true"
@@ -258,6 +258,7 @@ alias wgdown='sudo wg-quick down wg0'
 alias zshrc="vim ~/.zshrc && omz reload"
 alias fix-main="git pull -p; git checkout main && git remote set-head origin -a"
 alias rename-to-main="pwsh -Command Rename-GitlabProjectDefaultBranch main"
+alias new-guid="pwsh -c New-Guid"
 
 if which bat >/dev/null 2>&1 
 then

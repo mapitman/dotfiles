@@ -285,16 +285,17 @@ if [ -f "/etc/os-release" ]
 then
     if grep -Fiq "ubuntu" /etc/os-release
     then
-        alias update="if type snap > /dev/null 2>&1; then echo 'Updating snaps...'; sudo snap refresh; fi; if type flatpak > /dev/null 2>&1; then echo 'Updating Flatpaks...'; sudo flatpak update; fi; echo 'Updating packages...'; sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get autoremove -y"   
+        alias update="if type snap > /dev/null 2>&1; then echo 'Updating snaps...'; sudo snap refresh; fi; if type flatpak > /dev/null 2>&1; then echo 'Updating Flatpaks...'; sudo flatpak update; fi; echo 'Updating packages...'; sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get autoremove -y; omz update"   
     elif grep -Fiq "fedora" /etc/os-release
     then 
-        alias update="sudo dnf upgrade -y"
+        alias update="sudo dnf upgrade -y; omz update"
+    elif grep -Fiq "msys2" /etc/os-release
+    then
+        alias update="pacman -Syu --noconfirm; omz update"
     elif grep -Fiq "arch" /etc/os-release
     then
-        alias update="yay -Syu --noconfirm"
+        alias update="yay -Syu --noconfirm; omz update"
     fi
-else
-    alias update="pacman -Syu --noconfirm"
 fi
 
 fpath+=$HOME/.zsh/functions

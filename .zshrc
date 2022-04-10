@@ -38,7 +38,7 @@ ZSH_THEME="fox"
 # HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to automatically update without prompting.
 # DISABLE_UPDATE_PROMPT="true"
@@ -133,6 +133,14 @@ then
     PATH="$PATH:$HOME/.gem/ruby/2.7.0/bin"
 fi
 
+if [[ -e $HOME/.local/share/gem/ruby/3.0.0/bin ]]
+then
+   if ! [[ "$PATH" =~ "$HOME/.local/share/gem/ruby/3.0.0/bin" ]] 
+   then
+       PATH="$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin"
+   fi
+fi
+
 export PATH
 
 # Add DOTNETROOT only if a user installation of .NET Core exists
@@ -171,30 +179,34 @@ case "$OSTYPE" in
 
         vs ()
         {
-            files=(./*.sln)
-            if [ -e ${files[0]} ]
+            files=(./*.sln(N))
+            if [[ -e ${files[@]:0:1} ]]
             then
-                start ${files[0]}
+                echo "opening ${files[@]:0:1}..."
+                eval start ${files[@]:0:1} >/dev/null 2>&1 &
             else
-                files=(./*.csproj)
-                if [ -e ${files[0]} ]
+                files=(./*.csproj(N))
+                echo "opening ${files[@]:0:1}..."
+                if [[ -e ${files[@]:0:1} ]]
                 then
-                    start ${files[0]}
+                    eval start ${files[@]:0:1} >/dev/null 2>&1 &
                 fi
             fi
         }
 
         sudovs ()
         {
-            files=(./*.sln)
-            if [ -e ${files[0]} ]
+            files=(./*.sln(N))
+            if [[ -e ${files[@]:0:1} ]]
             then
-                sudo start ${files[0]}
+                echo "opening ${files[@]:0:1}..."
+                eval sudo start ${files[@]:0:1} >/dev/null 2>&1 &
             else
-                files=(./*.csproj)
-                if [ -e ${files[0]} ]
+                files=(./*.csproj(N))
+                echo "opening ${files[@]:0:1}..."
+                if [[ -e ${files[@]:0:1} ]]
                 then
-                    sudo start ${files[0]}
+                    eval sudo start ${files[@]:0:1} >/dev/null 2>&1 &
                 fi
             fi
         }
@@ -244,6 +256,9 @@ alias printenv='printenv | grep -e LS_COLORS -v | sort'
 alias wgup='sudo wg-quick up wg0'
 alias wgdown='sudo wg-quick down wg0'
 alias zshrc="vim ~/.zshrc && omz reload"
+alias fix-main="git pull -p; git checkout main && git remote set-head origin -a"
+alias rename-to-main="pwsh -Command Rename-GitlabProjectDefaultBranch main"
+alias new-guid="pwsh -c New-Guid"
 
 if which bat >/dev/null 2>&1 
 then
@@ -270,16 +285,17 @@ if [ -f "/etc/os-release" ]
 then
     if grep -Fiq "ubuntu" /etc/os-release
     then
-        alias update="if type snap > /dev/null 2>&1; then echo 'Updating snaps...'; sudo snap refresh; fi; if type flatpak > /dev/null 2>&1; then echo 'Updating Flatpaks...'; sudo flatpak update; fi; echo 'Updating packages...'; sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get autoremove -y"   
+        alias update="if type snap > /dev/null 2>&1; then echo 'Updating snaps...'; sudo snap refresh; fi; if type flatpak > /dev/null 2>&1; then echo 'Updating Flatpaks...'; sudo flatpak update; fi; echo 'Updating packages...'; sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get autoremove -y; omz update"   
     elif grep -Fiq "fedora" /etc/os-release
     then 
-        alias update="sudo dnf upgrade -y"
+        alias update="sudo dnf upgrade -y; omz update"
+    elif grep -Fiq "msys2" /etc/os-release
+    then
+        alias update="pacman -Syu --noconfirm; omz update"
     elif grep -Fiq "arch" /etc/os-release
     then
-        alias update="yay -Syu --noconfirm"
+        alias update="yay -Syu --noconfirm; omz update"
     fi
-else
-    alias update="pacman -Syu --noconfirm"
 fi
 
 fpath+=$HOME/.zsh/functions
@@ -300,7 +316,7 @@ rider ()
             rider="start rider64"
         ;;
         linux*)
-            rider=$HOME/rider/bin/rider.sh
+            rider=/usr/bin/rider
         ;;
         darwin*)
             rider=/usr/local/bin/rider
@@ -366,3 +382,8 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 
 # use this if I'm not going to use the "pure" prompt
 # source $HOME/.zsh/async-git-prompt.plugin.zsh
+alias aa="saml2aws login --skip-prompt; export AWS_PROFILE=shared"
+if [[ -e "/usr/share/nvm/init-nvm.sh" ]]
+then
+    source /usr/share/nvm/init-nvm.sh
+fi

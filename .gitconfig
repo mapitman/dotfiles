@@ -25,3 +25,5 @@
 
 [oh-my-zsh]
 	hide-info = 1
+[init]
+	defaultBranch = main

@@ -85,3 +85,4 @@ application/x-extension-xht=firefox.desktop;
 application/x-shellscript=vim.desktop;
 application/pdf=libreoffice-draw.desktop;
 binary/octet-stream=code.desktop;
+audio/mpeg=org.gnome.Totem.desktop;

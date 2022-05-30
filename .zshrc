@@ -141,6 +141,23 @@ then
    fi
 fi
 
+# Flatpak helpers
+if [[ -e $HOME/.local/share/flatpak/exports/bin ]]
+then
+    if ! [[ "$PATH" =~ "$HOME/.local/share/flatpak/exports/bin" ]]
+    then
+        PATH=$PATH:$HOME/.local/share/flatpak/exports/bin
+    fi
+fi
+
+if [[ -e /var/lib/flatpak/exports/bin ]]
+then
+    if ! [[ "$PATH" =~ "$/var/lib/flatpak/exports/bin" ]]
+    then
+        PATH=$PATH:/var/lib/flatpak/exports/bin
+    fi
+fi
+
 export PATH
 
 # Add DOTNETROOT only if a user installation of .NET Core exists
@@ -285,7 +302,7 @@ if [ -f "/etc/os-release" ]
 then
     if grep -Fiq "ubuntu" /etc/os-release
     then
-        alias update="if type snap > /dev/null 2>&1; then echo 'Updating snaps...'; sudo snap refresh; fi; if type flatpak > /dev/null 2>&1; then echo 'Updating Flatpaks...'; sudo flatpak update; fi; echo 'Updating packages...'; sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get autoremove -y; omz update"   
+        alias update="if type snap > /dev/null 2>&1; then echo 'Updating snaps...'; sudo snap refresh; fi; if type flatpak > /dev/null 2>&1; then echo 'Updating Flatpaks...'; flatpak update; fi; echo 'Updating packages...'; sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get autoremove -y; omz update"   
     elif grep -Fiq "fedora" /etc/os-release
     then 
         alias update="sudo dnf upgrade -y; omz update"

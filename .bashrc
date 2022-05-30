@@ -311,3 +311,5 @@ unset tmp
 unset temp
 
 export AWS_SDK_LOAD_CONFIG=1
+
+complete -C /usr/bin/terraform terraform

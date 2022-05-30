@@ -117,12 +117,6 @@ then
     PATH="$HOME/go/bin:$PATH"
 fi
 
-# Add .dotnet to path
-if ! [[ "$PATH" =~ "$HOME/.dotnet:" ]]
-then
-    PATH="$HOME/.dotnet:$PATH"
-fi
-
 if ! [[ "$PATH" =~ "$HOME/.dotnet/tools" ]]
 then
     PATH="$PATH:$HOME/.dotnet/tools"
@@ -158,13 +152,15 @@ then
     fi
 fi
 
-export PATH
-
-# Add DOTNETROOT only if a user installation of .NET Core exists
-if [ -e $HOME/.dotnet ]
+if [[ -e "$HOME/.tfenv/bin" ]]
 then
-    export DOTNET_ROOT="$HOME/.dotnet"
+    if ! [[ "$PATH" =~ "$HOME/.tfenv/bin" ]]
+    then
+        PATH="$HOME/.tfenv/bin:$PATH"
+    fi
 fi
+
+export PATH
 
 # Variables
 
@@ -277,10 +273,10 @@ alias fix-main="git pull -p; git checkout main && git remote set-head origin -a"
 alias rename-to-main="pwsh -Command Rename-GitlabProjectDefaultBranch main"
 alias new-guid="pwsh -c New-Guid"
 
-if which bat >/dev/null 2>&1 
+if [[ -e /usr/bin/bat ]] 
 then
     alias cat=bat
-elif which batcat >/dev/null 2>&1
+elif [[ -e /usr/bin/batcat ]]
 then
     alias cat=batcat
 fi
@@ -404,3 +400,12 @@ if [[ -e "/usr/share/nvm/init-nvm.sh" ]]
 then
     source /usr/share/nvm/init-nvm.sh
 fi
+
+if [[ -e "$HOME/.zsh/git-extras-completion.zsh" ]]
+then
+    source $HOME/.zsh/git-extras-completion.zsh
+fi
+
+complete -o nospace -C /usr/bin/terraform terraform
+
+

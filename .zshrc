@@ -239,7 +239,7 @@ case "$OSTYPE" in
         ;;
 esac
 
-alias ll="ls -l"
+alias ll="ls -lh"
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'

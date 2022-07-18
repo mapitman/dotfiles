@@ -326,7 +326,8 @@ rider ()
 {
     case "$OSTYPE" in
         msys)
-            rider="start rider64"
+            localappdata=`cygpath $LOCALAPPDATA`
+            rider="$localappdata/JetBrains/Toolbox/scripts/Rider.cmd"
         ;;
         linux*)
             rider=/usr/bin/rider

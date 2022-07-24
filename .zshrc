@@ -117,12 +117,6 @@ then
     PATH="$HOME/go/bin:$PATH"
 fi
 
-# Add .dotnet to path
-if ! [[ "$PATH" =~ "$HOME/.dotnet:" ]]
-then
-    PATH="$HOME/.dotnet:$PATH"
-fi
-
 if ! [[ "$PATH" =~ "$HOME/.dotnet/tools" ]]
 then
     PATH="$PATH:$HOME/.dotnet/tools"
@@ -141,13 +135,32 @@ then
    fi
 fi
 
-export PATH
-
-# Add DOTNETROOT only if a user installation of .NET Core exists
-if [ -e $HOME/.dotnet ]
+# Flatpak helpers
+if [[ -e $HOME/.local/share/flatpak/exports/bin ]]
 then
-    export DOTNET_ROOT="$HOME/.dotnet"
+    if ! [[ "$PATH" =~ "$HOME/.local/share/flatpak/exports/bin" ]]
+    then
+        PATH=$PATH:$HOME/.local/share/flatpak/exports/bin
+    fi
 fi
+
+if [[ -e /var/lib/flatpak/exports/bin ]]
+then
+    if ! [[ "$PATH" =~ "$/var/lib/flatpak/exports/bin" ]]
+    then
+        PATH=$PATH:/var/lib/flatpak/exports/bin
+    fi
+fi
+
+if [[ -e "$HOME/.tfenv/bin" ]]
+then
+    if ! [[ "$PATH" =~ "$HOME/.tfenv/bin" ]]
+    then
+        PATH="$HOME/.tfenv/bin:$PATH"
+    fi
+fi
+
+export PATH
 
 # Variables
 
@@ -243,7 +256,7 @@ case "$OSTYPE" in
         ;;
 esac
 
-alias ll="ls -l"
+alias ll="ls -lh"
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
@@ -260,10 +273,10 @@ alias fix-main="git pull -p; git checkout main && git remote set-head origin -a"
 alias rename-to-main="pwsh -Command Rename-GitlabProjectDefaultBranch main"
 alias new-guid="pwsh -c New-Guid"
 
-if which bat >/dev/null 2>&1 
+if [[ -e /usr/bin/bat ]] 
 then
     alias cat=bat
-elif which batcat >/dev/null 2>&1
+elif [[ -e /usr/bin/batcat ]]
 then
     alias cat=batcat
 fi
@@ -285,7 +298,7 @@ if [ -f "/etc/os-release" ]
 then
     if grep -Fiq "ubuntu" /etc/os-release
     then
-        alias update="if type snap > /dev/null 2>&1; then echo 'Updating snaps...'; sudo snap refresh; fi; if type flatpak > /dev/null 2>&1; then echo 'Updating Flatpaks...'; sudo flatpak update; fi; echo 'Updating packages...'; sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get autoremove -y; omz update"   
+        alias update="if type snap > /dev/null 2>&1; then echo 'Updating snaps...'; sudo snap refresh; fi; if type flatpak > /dev/null 2>&1; then echo 'Updating Flatpaks...'; flatpak update; fi; echo 'Updating packages...'; if type nala > /dev/null 2>&1; then sudo nala update && sudo nala upgrade && sudo nala autoremove; else sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get autoremove -y; fi; omz update"   
     elif grep -Fiq "fedora" /etc/os-release
     then 
         alias update="sudo dnf upgrade -y; omz update"
@@ -313,7 +326,8 @@ rider ()
 {
     case "$OSTYPE" in
         msys)
-            rider="start rider64"
+            localappdata=`cygpath $LOCALAPPDATA`
+            rider="$localappdata/JetBrains/Toolbox/scripts/Rider.cmd"
         ;;
         linux*)
             rider=/usr/bin/rider
@@ -387,3 +401,12 @@ if [[ -e "/usr/share/nvm/init-nvm.sh" ]]
 then
     source /usr/share/nvm/init-nvm.sh
 fi
+
+if [[ -e "$HOME/.zsh/git-extras-completion.zsh" ]]
+then
+    source $HOME/.zsh/git-extras-completion.zsh
+fi
+
+complete -o nospace -C /usr/bin/terraform terraform
+
+

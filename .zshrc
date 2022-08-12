@@ -5,7 +5,7 @@ case "$OSTYPE" in
         export PROGRAMFILESX86="Program\ Files\ \(x86\)"
         export USER=$USERNAME
         export MSYS=winsymlinks:nativestrict
-        export PYTHONPATH=$PYTHONPATH:/usr/lib/python3.8/site-packages
+        export PYTHONPATH=$PYTHONPATH:/usr/lib/python3.10/site-packages
    	    ;;
     darwin*)
         export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
@@ -273,7 +273,7 @@ alias fix-main="git pull -p; git checkout main && git remote set-head origin -a"
 alias rename-to-main="pwsh -Command Rename-GitlabProjectDefaultBranch main"
 alias new-guid="pwsh -c New-Guid"
 
-if [[ -e /usr/bin/bat ]] 
+if [[ -e /usr/bin/bat || -e /mingw64/bin/bat ]] 
 then
     alias cat=bat
 elif [[ -e /usr/bin/batcat ]]

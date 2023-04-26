@@ -5,7 +5,7 @@ case "$OSTYPE" in
         export PROGRAMFILESX86="Program\ Files\ \(x86\)"
         export USER=$USERNAME
         export MSYS=winsymlinks:nativestrict
-        export PYTHONPATH=$PYTHONPATH:/usr/lib/python3.8/site-packages
+        export PYTHONPATH=$PYTHONPATH:/usr/lib/python3.10/site-packages
    	    ;;
     darwin*)
         export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
@@ -183,7 +183,8 @@ export GOPATH="$HOME/go"
 case "$OSTYPE" in
     msys)
         alias open="start"
-        alias msbuild='/c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2019/Professional/MSBuild/Current/Bin/msbuild.exe'
+        # alias msbuild='/c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2019/Professional/MSBuild/Current/Bin/msbuild.exe'
+        alias msbuild='/c/Windows/Microsoft.NET/Framework/v4.0.30319/msbuild.exe'
         alias winget='pwsh -c $LOCALAPPDATA/Microsoft/WindowsApps/winget'
         alias build="msbuild build.proj"
         alias b="build"
@@ -280,7 +281,7 @@ alias fix-main="git pull -p; git checkout main && git remote set-head origin -a"
 alias rename-to-main="pwsh -Command Rename-GitlabProjectDefaultBranch main"
 alias new-guid="pwsh -c New-Guid"
 
-if [[ -e /usr/bin/bat ]] 
+if [[ -e /usr/bin/bat || -e /mingw64/bin/bat ]] 
 then
     alias cat=bat
 elif [[ -e /usr/bin/batcat ]]
@@ -402,7 +403,7 @@ zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 
 # use this if I'm not going to use the "pure" prompt
-# source $HOME/.zsh/async-git-prompt.plugin.zsh
+source $HOME/.zsh/async-git-prompt.plugin.zsh
 alias aa="saml2aws login --skip-prompt; export AWS_PROFILE=shared"
 if [[ -e "/usr/share/nvm/init-nvm.sh" ]]
 then

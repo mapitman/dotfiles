@@ -85,7 +85,7 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(zsh-autosuggestions docker zsh-syntax-highlighting aws web-search copybuffer)
+plugins=(zsh-autosuggestions docker zsh-syntax-highlighting aws web-search copybuffer systemadmin)
 
 source $ZSH/oh-my-zsh.sh
 

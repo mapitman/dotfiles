@@ -422,3 +422,23 @@ complete -o nospace -C /usr/bin/terraform terraform
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+# Safer alternatives to `rm`
+if [[ $VENDOR == apple ]]; then
+  trash() {
+    local -aU items=( $^@(N) )
+    local -aU missing=( ${@:|items} )
+    (( $#missing )) &&
+        print -u2 "trash: no such file(s): $missing"
+    (( $#items )) ||
+        return 66
+    print Moving $( eval ls -d -- ${(q)items[@]%/} ) to Trash.
+    items=( '(POSIX file "'${^items[@]:A}'")' )
+    osascript -e 'tell application "Finder" to delete every item of {'${(j:, :)items}'}' \
+        > /dev/null
+  }
+elif command -v gio > /dev/null; then
+  # gio is available for macOS, but gio trash DOES NOT WORK correctly there.
+  alias trash='gio trash'
+fi

@@ -280,6 +280,7 @@ alias zshrc="vim ~/.zshrc && omz reload"
 alias fix-main="git pull -p; git checkout main && git remote set-head origin -a"
 alias rename-to-main="pwsh -Command Rename-GitlabProjectDefaultBranch main"
 alias new-guid="pwsh -c New-Guid"
+alias j=z
 
 if [[ -e /usr/bin/bat || -e /mingw64/bin/bat ]] 
 then
@@ -372,6 +373,7 @@ export AWS_SDK_LOAD_CONFIG=1
 
 # z - Similar to autojump
 # Works better in MSYS2
+# TODO: Remove this once satisfied z plugin work as well or better
 # _Z_CMD=j
 # . ~/.local/bin/z.sh
 

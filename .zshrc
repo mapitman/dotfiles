@@ -85,7 +85,7 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(zsh-autosuggestions docker zsh-syntax-highlighting aws web-search copybuffer systemadmin)
+plugins=(zsh-autosuggestions docker zsh-syntax-highlighting aws web-search copybuffer systemadmin z)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -360,6 +360,9 @@ rider ()
     fi
 }
 
+function glab-run-branch() {
+    glab ci run -b $(git rev-parse --abbrev-ref HEAD)
+}
 
 # Visual Studio complains about TMP, tmp, TEMP and temp all being set
 unset tmp
@@ -369,8 +372,8 @@ export AWS_SDK_LOAD_CONFIG=1
 
 # z - Similar to autojump
 # Works better in MSYS2
-_Z_CMD=j
-. ~/.local/bin/z.sh
+# _Z_CMD=j
+# . ~/.local/bin/z.sh
 
 # zsh parameter completion for the dotnet CLI
 _dotnet_zsh_complete()

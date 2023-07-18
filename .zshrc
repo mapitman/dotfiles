@@ -7,6 +7,9 @@ case "$OSTYPE" in
         export MSYS=winsymlinks:nativestrict
         export PYTHONPATH=$PYTHONPATH:/usr/lib/python3.10/site-packages
    	    ;;
+    linux*)
+        export XDG_DATA_DIRS=$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:/home/mark/.local/share/flatpak/exports/share
+        ;;
     darwin*)
         export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 esac
@@ -338,7 +341,9 @@ rider ()
             rider="$localappdata/JetBrains/Toolbox/scripts/Rider.cmd"
         ;;
         linux*)
-            rider=/usr/bin/rider
+            # Before this will work, the file types must be associated
+            # https://www.jetbrains.com/help/rider/Creating_and_Registering_File_Types.html
+            rider=xdg-open
         ;;
         darwin*)
             rider=/usr/local/bin/rider

@@ -310,11 +310,7 @@ if [ -f "/etc/os-release" ]
 then
     if grep -Fiq "ubuntu" /etc/os-release
     then
-<<<<<<< HEAD
         alias update="if type snap > /dev/null 2>&1; then echo 'Updating snaps...'; sudo snap refresh; fi; if type flatpak > /dev/null 2>&1; then echo 'Updating Flatpaks...'; flatpak update; fi; echo 'Updating packages...'; if type nala > /dev/null 2>&1; then sudo nala upgrade && sudo nala autoremove; else sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y; fi; omz update"   
-=======
-        alias update="if type snap > /dev/null 2>&1; then echo 'Updating snaps...'; sudo snap refresh; fi; if type flatpak > /dev/null 2>&1; then echo 'Updating Flatpaks...'; flatpak update; fi; echo 'Updating packages...'; if type nala > /dev/null 2>&1; then sudo nala upgrade -y; else sudo apt-get update && sudo apt-get upgrade -y; fi; omz update"   
->>>>>>> e029c8faae61aea5f83b88d0a85279b014d0a6e7
     elif grep -Fiq "fedora" /etc/os-release
     then 
         alias update="sudo dnf upgrade -y; omz update"

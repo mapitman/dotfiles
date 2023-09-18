@@ -311,6 +311,7 @@ then
     if grep -Fiq "ubuntu" /etc/os-release
     then
         alias update="if type snap > /dev/null 2>&1; then echo 'Updating snaps...'; sudo snap refresh; fi; if type flatpak > /dev/null 2>&1; then echo 'Updating Flatpaks...'; flatpak update; fi; echo 'Updating packages...'; if type nala > /dev/null 2>&1; then sudo nala upgrade && sudo nala autoremove; else sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y; fi; omz update"   
+        export MDVIEW_DIR=$HOME/snap/firefox/mdview
     elif grep -Fiq "fedora" /etc/os-release
     then 
         alias update="sudo dnf upgrade -y; omz update"
@@ -459,3 +460,6 @@ elif command -v gio > /dev/null; then
   # gio is available for macOS, but gio trash DOES NOT WORK correctly there.
   alias trash='gio trash'
 fi
+
+zstyle ':completion:*' menu select
+fpath+=~/.zfunc

@@ -1,10 +1,9 @@
 [user]
     email = mark@pitman.io
     name = Mark Pitman
-[commit]
-    template = ~/.git-commit-template
 [core]
-    editor = vim -c'norm! ggj'
+    #editor = vim -c'norm! ggj'
+    editor = vim
     preloadindex = true
     fscache = true
     pager = less -FRX

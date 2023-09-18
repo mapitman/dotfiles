@@ -170,6 +170,22 @@ then
     fi
 fi
 
+if [[ -e $HOME/android-studio/bin ]]
+then
+   if ! [[ "$PATH" =~ "$HOME/android-studio/bin" ]] 
+   then
+       PATH="$PATH:$HOME/android-studio/bin"
+   fi
+fi
+
+if [[ -e $HOME/Android/Sdk/cmdline-tools/bin ]]
+then
+   if ! [[ "$PATH" =~ "$HOME/Android/Sdk/cmdline-tools/bin" ]] 
+   then
+       PATH="$PATH:$HOME/Android/Sdk/cmdline-tools/bin"
+   fi
+fi
+
 export PATH
 
 # Variables

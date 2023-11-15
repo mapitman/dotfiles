@@ -1,3 +1,6 @@
 [core]
     autocrlf = true
-
+[merge]
+    tool = p4merge
+[mergetool "p4merge"]
+	path = /c/Program Files/Perforce/p4merge.exe

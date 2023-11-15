@@ -26,3 +26,7 @@
 	hide-info = 1
 [init]
 	defaultBranch = main
+[gui]
+	fontdiff = -family \"Cascadia Code\" -size 10 -weight normal -slant roman -underline 0 -overstrike 0
+[mergetool]
+	prompt = false

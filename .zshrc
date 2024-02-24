@@ -88,7 +88,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(zsh-autosuggestions docker zsh-syntax-highlighting aws web-search copybuffer systemadmin z)
+plugins=(zsh-autosuggestions docker zsh-syntax-highlighting aws web-search copybuffer z)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -327,7 +327,7 @@ then
     if grep -Fiq "ubuntu" /etc/os-release
     then
         alias update="if type snap > /dev/null 2>&1; then echo 'Updating snaps...'; sudo snap refresh; fi; if type flatpak > /dev/null 2>&1; then echo 'Updating Flatpaks...'; flatpak update; fi; echo 'Updating packages...'; if type nala > /dev/null 2>&1; then sudo nala upgrade; else sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y; fi; if type deb-get > /dev/null 2>&1; then deb-get update; deb-get upgrade; fi; omz update"
-        export MDVIEW_DIR=$HOME/snap/firefox/mdview
+        export MDVIEW_DIR=$HOME/mdview-temp
     elif grep -Fiq "fedora" /etc/os-release
     then 
         alias update="sudo dnf upgrade -y; omz update"

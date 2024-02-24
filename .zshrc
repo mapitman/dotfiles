@@ -387,6 +387,19 @@ function glab-run-branch() {
     glab ci run -b $(git rev-parse --abbrev-ref HEAD)
 }
 
+function rm-branches() {
+    # Check if the current path is a Git repository
+    if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+        echo "Not a Git repository. Exiting..."
+        exit 1
+    fi
+
+    # Delete each branch except "main"
+    for branch in $(git branch --list | grep -v "main"); do
+        git branch -D $branch
+    done
+}
+
 # Visual Studio complains about TMP, tmp, TEMP and temp all being set
 unset tmp
 unset temp

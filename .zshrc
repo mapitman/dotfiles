@@ -394,8 +394,9 @@ function rm-branches() {
         exit 1
     fi
 
-    # Delete each branch except "main"
-    for branch in $(git branch --list | grep -v "main"); do
+    # Delete each branch except the default branch
+    default_branch=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+    for branch in $(git branch --list | grep -v $default_branch); do
         git branch -D $branch
     done
 }

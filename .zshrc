@@ -194,6 +194,7 @@ export EDITOR="vim"
 export VISUAL="$EDITOR"
 export _JAVA_AWT_WM_NONREPARENTING=1
 export GOPATH="$HOME/go"
+export MOZ_ENABLE_WAYLAND=1
 
 
 
@@ -275,6 +276,11 @@ case "$OSTYPE" in
         alias open="xdg-open"
         alias ls='ls --color=auto'
         alias xclip='xclip -selection clipboard'
+        if [[ $XDG_SESSION_DESKTOP = "hyprland" ]]
+        then
+            alias hyprconf="vim ~/.config/hypr/hyprland.conf"
+            alias waybarconf="vim ~/.config/waybar/config"
+        fi
         ;;
     darwin*)
         alias start="open"

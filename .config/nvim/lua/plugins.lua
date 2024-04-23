@@ -44,7 +44,8 @@ return packer.startup(function(use)
 
 	use("nvim-tree/nvim-tree.lua") -- file explorer
 	use("nvim-tree/nvim-web-devicons") -- vs-code like icons
-	use ("folke/which-key.nvim")
+	use ("folke/which-key.nvim") -- which key (maps keys)
+  use ( 'numToStr/Comment.nvim') -- Comment
 
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()

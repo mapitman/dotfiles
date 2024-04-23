@@ -15,4 +15,5 @@ vim.opt.expandtab = true
 require("plugins")
 require("nvim-tree").setup()
 require("whichkey")
+require("Comment").setup()
 

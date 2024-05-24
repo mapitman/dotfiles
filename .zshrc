@@ -9,6 +9,13 @@ case "$OSTYPE" in
    	    ;;
     linux*)
         export XDG_DATA_DIRS=$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:/home/mark/.local/share/flatpak/exports/share
+        # Prompt theme
+        fpath+=$HOME/.zsh/pure
+        autoload -U promptinit; promptinit
+        zstyle :prompt:pure:git:stash show yes
+        prompt pure
+        # HACK to disable setting the terminal title
+        prompt_pure_set_title() {}
         ;;
     darwin*)
         export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
@@ -23,9 +30,9 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-#ZSH_THEME=""
-#ZSH_THEME="robbyrussell"
-ZSH_THEME="fox"
+# ZSH_THEME=""
+# ZSH_THEME="robbyrussell"
+ZSH_THEME="bira"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -305,7 +312,7 @@ alias zshrc="vim ~/.zshrc && omz reload"
 alias fix-main="git pull -p; git checkout main && git remote set-head origin -a"
 alias rename-to-main="pwsh -Command Rename-GitlabProjectDefaultBranch main"
 alias new-guid="pwsh -c New-Guid"
-alias j=z
+# alias j=z
 
 if [[ -e /usr/bin/bat || -e /mingw64/bin/bat ]] 
 then
@@ -428,13 +435,8 @@ _dotnet_zsh_complete()
 
 compctl -K _dotnet_zsh_complete dotnet
 
-# Prompt theme
-fpath+=$HOME/.zsh/pure
 
-autoload -U promptinit; promptinit
-prompt pure
-# HACK to disable setting the terminal title
-prompt_pure_set_title() {}
+
 
 # This speeds up pasting w/ autosuggest
 # https://github.com/zsh-users/zsh-autosuggestions/issues/238
@@ -450,7 +452,7 @@ zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 
 # use this if I'm not going to use the "pure" prompt
-# source $HOME/.zsh/async-git-prompt.plugin.zsh
+source $HOME/.zsh/async-git-prompt.plugin.zsh
 
 if [[ -e "/usr/share/nvm/init-nvm.sh" ]]
 then
@@ -499,3 +501,26 @@ fi
 
 zstyle ':completion:*' menu select
 fpath+=~/.zfunc
+
+# git repository greeter
+last_repository=
+check_directory_for_new_repository() {
+	current_repository=$(git rev-parse --show-toplevel 2> /dev/null)
+	
+	if [ "$current_repository" ] && \
+	   [ "$current_repository" != "$last_repository" ] && \
+       type onefetch > /dev/null 2>&1; then
+		onefetch
+	fi
+	last_repository=$current_repository
+}
+
+cd() {
+	builtin cd "$@"
+	check_directory_for_new_repository
+}
+
+j() {
+    z "$@"
+    check_directory_for_new_repository
+}

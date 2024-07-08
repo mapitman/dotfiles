@@ -289,8 +289,6 @@ case "$OSTYPE" in
         }
    	    ;;
     linux*)
-        alias start="xdg-open"
-        alias open="xdg-open"
         alias ls='ls --color=auto'
         alias xclip='xclip -selection clipboard'
         if [[ $XDG_SESSION_DESKTOP = "hyprland" ]]

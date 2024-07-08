@@ -1,25 +1,3 @@
-case "$OSTYPE" in
-    msys)
-        export TERM=cygwin
-        export WINPROGRAMFILESX86="Program Files (x86)"
-        export PROGRAMFILESX86="Program\ Files\ \(x86\)"
-        export USER=$USERNAME
-        export MSYS=winsymlinks:nativestrict
-        export PYTHONPATH=$PYTHONPATH:/usr/lib/python3.10/site-packages
-   	    ;;
-    linux*)
-        export XDG_DATA_DIRS=$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:/home/mark/.local/share/flatpak/exports/share
-        # Prompt theme
-        fpath+=$HOME/.zsh/pure
-        autoload -U promptinit; promptinit
-        zstyle :prompt:pure:git:stash show yes
-        prompt pure
-        # HACK to disable setting the terminal title
-        prompt_pure_set_title() {}
-        ;;
-    darwin*)
-        export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-esac
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -30,9 +8,9 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# ZSH_THEME=""
+ ZSH_THEME=""
 # ZSH_THEME="robbyrussell"
-ZSH_THEME="bira"
+#ZSH_THEME="bira"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -95,12 +73,44 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(zsh-autosuggestions docker zsh-syntax-highlighting aws web-search copybuffer z)
+plugins=(zsh-autosuggestions docker zsh-syntax-highlighting web-search copybuffer z)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
+case "$OSTYPE" in
+    msys)
+        export TERM=cygwin
+        export WINPROGRAMFILESX86="Program Files (x86)"
+        export PROGRAMFILESX86="Program\ Files\ \(x86\)"
+        export USER=$USERNAME
+        export MSYS=winsymlinks:nativestrict
+        export PYTHONPATH=$PYTHONPATH:/usr/lib/python3.10/site-packages
+   	    ;;
+    linux*)
+        export XDG_DATA_DIRS=$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:/home/mark/.local/share/flatpak/exports/share
+        # Prompt theme
+        fpath+=$HOME/.zsh/pure
+        autoload -U promptinit; promptinit
+        zstyle :prompt:pure:git:stash show yes
+        prompt pure
+        # HACK to disable setting the terminal title
+        prompt_pure_set_title() {}
+        ;;
+    darwin*)
+        export PATH="/opt/homebrew/bin:/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+        export PATH="/opt/homebrew/opt/ruby/bin:/opt/homebrew/lib/ruby/gems/3.3.0/bin:$PATH"
+        export HOMEBREW_NO_ENV_HINTS=1
+        # Prompt theme
+        fpath+=$HOME/.zsh/pure
+        autoload -U promptinit; promptinit
+        zstyle :prompt:pure:git:stash show yes
+        prompt pure
+        # HACK to disable setting the terminal title
+        prompt_pure_set_title() {}
+        export DOCKER_HOST="unix://$HOME/.colima/docker.sock"
+esac
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -292,7 +302,9 @@ case "$OSTYPE" in
     darwin*)
         alias start="open"
         alias xclip='pbcopy'
-        alias dotnet="TERM=xterm dotnet"
+        #alias dotnet="TERM=xterm dotnet"
+        alias update="if type brew > /dev/null 2>&1; then brew update; brew upgrade; fi; omz update;"
+        alias vim="nvim"
         ;;
 esac
 
@@ -377,7 +389,7 @@ rider ()
             rider=xdg-open
         ;;
         darwin*)
-            rider=/usr/local/bin/rider
+            rider=$HOME/Applications/Rider.app/Contents/MacOS/rider
         ;;
     esac
 
@@ -418,14 +430,6 @@ function rm-branches() {
 unset tmp
 unset temp
 
-export AWS_SDK_LOAD_CONFIG=1
-
-# z - Similar to autojump
-# Works better in MSYS2
-# TODO: Remove this once satisfied z plugin work as well or better
-# _Z_CMD=j
-# . ~/.local/bin/z.sh
-
 # zsh parameter completion for the dotnet CLI
 _dotnet_zsh_complete()
 {
@@ -452,7 +456,7 @@ zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 
 # use this if I'm not going to use the "pure" prompt
-source $HOME/.zsh/async-git-prompt.plugin.zsh
+#source $HOME/.zsh/async-git-prompt.plugin.zsh
 
 if [[ -e "/usr/share/nvm/init-nvm.sh" ]]
 then
@@ -524,3 +528,7 @@ j() {
     z "$@"
     check_directory_for_new_repository
 }
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+eval "$(zellij setup --generate-auto-start zsh)"

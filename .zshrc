@@ -207,7 +207,7 @@ export PATH
 
 # Variables
 
-export EDITOR="vim"
+export EDITOR="nvim"
 export VISUAL="$EDITOR"
 export _JAVA_AWT_WM_NONREPARENTING=1
 export GOPATH="$HOME/go"
@@ -528,5 +528,14 @@ j() {
 }
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+function yy() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
 
 eval "$(zellij setup --generate-auto-start zsh)"

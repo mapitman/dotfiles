@@ -3,7 +3,7 @@
     name = Mark Pitman
 [core]
     #editor = vim -c'norm! ggj'
-    editor = vim
+    editor = nvim
     preloadindex = true
     fscache = true
     pager = less -FRX

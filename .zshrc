@@ -324,10 +324,10 @@ alias rename-to-main="pwsh -Command Rename-GitlabProjectDefaultBranch main"
 alias new-guid="pwsh -c New-Guid"
 # alias j=z
 
-if [[ -e /usr/bin/bat || -e /mingw64/bin/bat ]] 
+if type bat >/dev/null 2>&1 
 then
     alias cat=bat
-elif [[ -e /usr/bin/batcat ]]
+elif type batcat >/dev/null 2>&1
 then
     alias cat=batcat
 fi
@@ -538,4 +538,10 @@ function yy() {
 	rm -f -- "$tmp"
 }
 
+export ZELLIJ_AUTO_ATTACH=true
 eval "$(zellij setup --generate-auto-start zsh)"
+
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+

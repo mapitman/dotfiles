@@ -339,8 +339,8 @@ alias tf=terraform
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-alias mitmproxy="docker run --rm -it -v ~/.mitmproxy:/home/mitmproxy/.mitmproxy -p 8080:8080 mitmproxy/mitmproxy"
-alias mitmweb="docker run --rm -it -v ~/.mitmproxy:/home/mitmproxy/.mitmproxy -p 8080:8080 -p 8081:8081 mitmproxy/mitmproxy mitmweb --web-iface 0.0.0.0"
+#alias mitmproxy="docker run --rm -it -v ~/.mitmproxy:/home/mitmproxy/.mitmproxy -p 8080:8080 mitmproxy/mitmproxy"
+#alias mitmweb="docker run --rm -it -v ~/.mitmproxy:/home/mitmproxy/.mitmproxy -p 8080:8080 -p 8081:8081 mitmproxy/mitmproxy mitmweb --web-iface 0.0.0.0"
 alias topten="history | awk '{print $2}' | sort | uniq -c | sort -rn | head -n 10"
 alias redis-cli='docker run --rm -it mapitman/redis-cli'
 
@@ -538,8 +538,10 @@ function yy() {
 	rm -f -- "$tmp"
 }
 
-export ZELLIJ_AUTO_ATTACH=true
-eval "$(zellij setup --generate-auto-start zsh)"
+export ZELLIJ_AUTO_ATTACH=false
+if [[ $TERM_PROGRAM != vscode ]]; then
+  eval "$(zellij setup --generate-auto-start zsh)"
+fi
 
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"

@@ -203,6 +203,14 @@ then
    fi
 fi
 
+if [[ -e $HOME/.cargo/bin ]]
+then
+    if ! [[ "$PATH" =~ "$HOME/.cargo/bin" ]]
+    then
+        PATH="$PATH:$HOME/.cargo/bin"
+    fi
+fi
+
 export PATH
 
 # Variables

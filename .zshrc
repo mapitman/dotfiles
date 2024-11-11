@@ -546,12 +546,19 @@ function yy() {
 	rm -f -- "$tmp"
 }
 
-export ZELLIJ_AUTO_ATTACH=false
-if [[ $TERM_PROGRAM != vscode ]]; then
-  eval "$(zellij setup --generate-auto-start zsh)"
+if type zellij > /dev/null 2>&1
+then
+	export ZELLIJ_AUTO_ATTACH=false
+	if [[ $TERM_PROGRAM != vscode ]]; then
+  		eval "$(zellij setup --generate-auto-start zsh)"
+	fi
 fi
 
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+if type pyenv > /dev/null 2>&1
+then
+	export PYENV_ROOT="$HOME/.pyenv"
+	[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+	eval "$(pyenv init -)"
+fi
+
 

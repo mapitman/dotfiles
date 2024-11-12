@@ -97,6 +97,7 @@ case "$OSTYPE" in
         prompt pure
         # HACK to disable setting the terminal title
         prompt_pure_set_title() {}
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
         ;;
     darwin*)
         export PATH="/opt/homebrew/bin:/usr/local/opt/coreutils/libexec/gnubin:$PATH"

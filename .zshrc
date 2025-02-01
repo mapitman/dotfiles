@@ -90,13 +90,6 @@ case "$OSTYPE" in
    	    ;;
     linux*)
         export XDG_DATA_DIRS=$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:/home/mark/.local/share/flatpak/exports/share
-        # Prompt theme
-        fpath+=$HOME/.zsh/pure
-        autoload -U promptinit; promptinit
-        zstyle :prompt:pure:git:stash show yes
-        prompt pure
-        # HACK to disable setting the terminal title
-        prompt_pure_set_title() {}
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
         ;;
     darwin*)
@@ -562,4 +555,5 @@ then
 	eval "$(pyenv init -)"
 fi
 
+eval "$(starship init zsh)"
 

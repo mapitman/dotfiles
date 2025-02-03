@@ -96,13 +96,6 @@ case "$OSTYPE" in
         export PATH="/opt/homebrew/bin:/usr/local/opt/coreutils/libexec/gnubin:$PATH"
         export PATH="/opt/homebrew/opt/ruby/bin:/opt/homebrew/lib/ruby/gems/3.3.0/bin:$PATH"
         export HOMEBREW_NO_ENV_HINTS=1
-        # Prompt theme
-        fpath+=$HOME/.zsh/pure
-        autoload -U promptinit; promptinit
-        zstyle :prompt:pure:git:stash show yes
-        prompt pure
-        # HACK to disable setting the terminal title
-        prompt_pure_set_title() {}
         export DOCKER_HOST="unix://$HOME/.colima/docker.sock"
 esac
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -455,7 +448,7 @@ pastefinish() {
 zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 
-# use this if I'm not going to use the "pure" prompt
+# use this if I'm not going to use the a prompt with built-in git support
 #source $HOME/.zsh/async-git-prompt.plugin.zsh
 
 if [[ -e "/usr/share/nvm/init-nvm.sh" ]]

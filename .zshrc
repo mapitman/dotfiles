@@ -533,13 +533,13 @@ function yy() {
 	rm -f -- "$tmp"
 }
 
-if type zellij > /dev/null 2>&1
-then
-	export ZELLIJ_AUTO_ATTACH=false
-	if [[ $TERM_PROGRAM != vscode ]]; then
-  		eval "$(zellij setup --generate-auto-start zsh)"
-	fi
-fi
+#if type zellij > /dev/null 2>&1
+#then
+#	export ZELLIJ_AUTO_ATTACH=false
+#	if [[ $TERM_PROGRAM != vscode ]]; then
+#  		eval "$(zellij setup --generate-auto-start zsh)"
+#	fi
+#fi
 
 if type pyenv > /dev/null 2>&1
 then

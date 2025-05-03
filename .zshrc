@@ -89,7 +89,7 @@ case "$OSTYPE" in
         export PYTHONPATH=$PYTHONPATH:/usr/lib/python3.10/site-packages
    	    ;;
     linux*)
-        export XDG_DATA_DIRS=$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:/home/mark/.local/share/flatpak/exports/share
+        export XDG_DATA_DIRS=$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:/home/mark/.local/share/flatpak/exports/share
         if [ -e /home/linuxbrew/.linuxbrew/bin ]
         then
             eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"

@@ -90,7 +90,10 @@ case "$OSTYPE" in
    	    ;;
     linux*)
         export XDG_DATA_DIRS=$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:/home/mark/.local/share/flatpak/exports/share
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+        if [ -e /home/linuxbrew/.linuxbrew/bin ]
+        then
+            eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+        fi
         ;;
     darwin*)
         export PATH="/opt/homebrew/bin:/usr/local/opt/coreutils/libexec/gnubin:$PATH"

@@ -73,7 +73,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(zsh-autosuggestions docker zsh-syntax-highlighting web-search copybuffer z)
+plugins=(zsh-autosuggestions docker zsh-syntax-highlighting web-search copybuffer)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -320,7 +320,6 @@ alias zshrc="vim ~/.zshrc && omz reload"
 alias fix-main="git pull -p; git checkout main && git remote set-head origin -a"
 alias rename-to-main="pwsh -Command Rename-GitlabProjectDefaultBranch main"
 alias new-guid="pwsh -c New-Guid"
-# alias j=z
 
 if type bat >/dev/null 2>&1 
 then
@@ -552,4 +551,4 @@ then
 fi
 
 eval "$(starship init zsh)"
-
+eval "$(zoxide init zsh)"

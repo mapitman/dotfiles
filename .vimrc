@@ -11,6 +11,7 @@ set completeopt-=preview
 let g:neoplete#enable_at_startup=1
 set cursorline
 set pastetoggle=<F2>
+set ignorecase
 set smartcase
 nmap <F7> :NERDTreeToggle<CR>
 nmap <F8> :TagbarToggle<CR>

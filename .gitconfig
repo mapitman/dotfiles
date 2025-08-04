@@ -2,7 +2,7 @@
     email = mark@pitman.io
     name = Mark Pitman
 [core]
-    editor = vim -c'norm! ggj'
+    editor = nvim -c'norm! ggj'
     #editor = nvim
     preloadindex = true
     fscache = true

@@ -310,8 +310,6 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias bashrc="vim ~/.bashrc && exec bash"
 alias h="cd ~"
-alias clear='printf "\33[2J"'
-alias cclear='/usr/bin/clear'
 alias cls='clear'
 alias printenv='printenv | grep -e LS_COLORS -v | sort'
 alias wgup='sudo wg-quick up wg0'

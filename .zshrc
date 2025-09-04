@@ -80,14 +80,6 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 case "$OSTYPE" in
-    msys)
-        export TERM=cygwin
-        export WINPROGRAMFILESX86="Program Files (x86)"
-        export PROGRAMFILESX86="Program\ Files\ \(x86\)"
-        export USER=$USERNAME
-        export MSYS=winsymlinks:nativestrict
-        export PYTHONPATH=$PYTHONPATH:/usr/lib/python3.10/site-packages
-   	    ;;
     linux*)
         export XDG_DATA_DIRS=$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:/home/mark/.local/share/flatpak/exports/share
         if [ -e /home/linuxbrew/.linuxbrew/bin ]
@@ -101,20 +93,7 @@ case "$OSTYPE" in
         export HOMEBREW_NO_ENV_HINTS=1
         export DOCKER_HOST="unix://$HOME/.colima/docker.sock"
 esac
-# export MANPATH="/usr/local/man:$MANPATH"
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
 
 # User specific environment
 if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
@@ -216,76 +195,6 @@ export MOZ_ENABLE_WAYLAND=1
 # Aliases and functions
 
 case "$OSTYPE" in
-    msys)
-        alias open="start"
-        # alias msbuild='/c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2019/Professional/MSBuild/Current/Bin/msbuild.exe'
-        alias msbuild='/c/Windows/Microsoft.NET/Framework/v4.0.30319/msbuild.exe'
-        alias winget='pwsh -c $LOCALAPPDATA/Microsoft/WindowsApps/winget'
-        alias build="msbuild build.proj"
-        alias b="build"
-        alias cb="git clean -dxf && build"
-        alias edit-hosts='sudo vim /C/Windows/System32/drivers/etc/hosts'
-        alias bind="docker run -it --rm mapitman/bind-utils"
-        alias more=less
-        #alias dotnet="/c/Program\ Files/dotnet/dotnet.exe"
-        alias cpawscreds='cp $USERPROFILE/.aws/credentials ~/.aws/credentials'
-
-        # https://github.com/mapitman/pi-ticker
-        alias zoomdetector="pushd ~/src/github/mapitman/pi-ticker && ./zoom-detector.py"
-
-        vs ()
-        {
-            files=(./*.sln(N))
-            if [[ -e ${files[@]:0:1} ]]
-            then
-                echo "opening ${files[@]:0:1}..."
-                eval start ${files[@]:0:1} >/dev/null 2>&1 &
-            else
-                files=(./*.csproj(N))
-                echo "opening ${files[@]:0:1}..."
-                if [[ -e ${files[@]:0:1} ]]
-                then
-                    eval start ${files[@]:0:1} >/dev/null 2>&1 &
-                fi
-            fi
-        }
-
-        sudovs ()
-        {
-            files=(./*.sln(N))
-            if [[ -e ${files[@]:0:1} ]]
-            then
-                echo "opening ${files[@]:0:1}..."
-                eval sudo start ${files[@]:0:1} >/dev/null 2>&1 &
-            else
-                files=(./*.csproj(N))
-                echo "opening ${files[@]:0:1}..."
-                if [[ -e ${files[@]:0:1} ]]
-                then
-                    eval sudo start ${files[@]:0:1} >/dev/null 2>&1 &
-                fi
-            fi
-        }
-
-        dig () {
-            docker run -it --rm mapitman/linux-tools dig $@
-        }
-        host () {
-            docker run -it --rm mapitman/linux-tools host $@
-        }
-
-        pwgen () {
-            docker run -it --rm  mapitman/linux-tools pwgen "$@"
-        }
-
-        telnet () {
-            docker run -it --rm mapitman/linux-tools telnet "$@";
-        }
-
-        nc () {
-            docker run -it --rm mapitman/linux-tools nc "$@";
-        }
-   	    ;;
     linux*)
         alias ls='ls --color=auto'
         alias xclip='xclip -selection clipboard'
@@ -319,6 +228,11 @@ alias fix-main="git pull -p; git checkout main && git remote set-head origin -a"
 alias rename-to-main="pwsh -Command Rename-GitlabProjectDefaultBranch main"
 alias new-guid="pwsh -c New-Guid"
 
+if type nvim >/dev/null 2>&1
+then
+  alias vim=nvim
+fi
+
 if type bat >/dev/null 2>&1 
 then
     alias cat=bat
@@ -334,28 +248,28 @@ alias tf=terraform
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-#alias mitmproxy="docker run --rm -it -v ~/.mitmproxy:/home/mitmproxy/.mitmproxy -p 8080:8080 mitmproxy/mitmproxy"
-#alias mitmweb="docker run --rm -it -v ~/.mitmproxy:/home/mitmproxy/.mitmproxy -p 8080:8080 -p 8081:8081 mitmproxy/mitmproxy mitmweb --web-iface 0.0.0.0"
 alias topten="history | awk '{print $2}' | sort | uniq -c | sort -rn | head -n 10"
 alias redis-cli='docker run --rm -it mapitman/redis-cli'
 
 # if uname -a | grep -q Microsoft || uname -a | grep -q Ubuntu
 if [ -f "/etc/os-release" ]
 then
-    if grep -Fiq "ubuntu" /etc/os-release
-    then
-        alias update="if type snap > /dev/null 2>&1; then echo 'Updating snaps...'; sudo snap refresh; fi; if type flatpak > /dev/null 2>&1; then echo 'Updating Flatpaks...'; flatpak update; fi; echo 'Updating packages...'; if type nala > /dev/null 2>&1; then sudo nala upgrade; else sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y; fi; if type deb-get > /dev/null 2>&1; then deb-get update; deb-get upgrade; fi; omz update"
-        export MDVIEW_DIR=$HOME/mdview-temp
-    elif grep -Fiq "fedora" /etc/os-release
-    then 
-        alias update="sudo dnf upgrade -y; omz update"
-    elif grep -Fiq "msys2" /etc/os-release
-    then
-        alias update="pacman -Syu --noconfirm; omz update"
-    elif grep -Fiq "arch" /etc/os-release
-    then
-        alias update="yay -Syu --noconfirm; omz update"
-    fi
+  if grep -Fiq "ubuntu" /etc/os-release
+  then
+    alias update="if type snap > /dev/null 2>&1; then echo 'Updating snaps...'; sudo snap refresh; fi; if type flatpak > /dev/null 2>&1; then echo 'Updating Flatpaks...'; flatpak update; fi; echo 'Updating packages...'; if type nala > /dev/null 2>&1; then sudo nala upgrade; else sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y; fi; if type deb-get > /dev/null 2>&1; then deb-get update; deb-get upgrade; fi; omz update"
+  elif grep -Fiq "fedora" /etc/os-release
+  then 
+    alias update="sudo dnf upgrade -y; omz update"
+  elif grep -Fiq "msys2" /etc/os-release
+  then
+    alias update="pacman -Syu --noconfirm; omz update"
+  elif grep -Fiq "arch" /etc/os-release && type omarchy-update >/dev/null 2>&1
+  then
+    alias update="omarchy-update; omz update"
+  elif grep -Fiq "arch" /etc/os-release
+  then
+    alias update="yay -Syu --noconfirm; omz update"
+  fi
 fi
 
 fpath+=$HOME/.zsh/functions
@@ -372,10 +286,6 @@ function loadavg() {
 rider ()
 {
     case "$OSTYPE" in
-        msys)
-            localappdata=`cygpath $LOCALAPPDATA`
-            rider="$localappdata/JetBrains/Toolbox/scripts/Rider.cmd"
-        ;;
         linux*)
             # Before this will work, the file types must be associated
             # https://www.jetbrains.com/help/rider/Creating_and_Registering_File_Types.html
@@ -419,10 +329,6 @@ function rm-branches() {
     done
 }
 
-# Visual Studio complains about TMP, tmp, TEMP and temp all being set
-unset tmp
-unset temp
-
 # zsh parameter completion for the dotnet CLI
 _dotnet_zsh_complete()
 {
@@ -448,8 +354,6 @@ pastefinish() {
 zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 
-# use this if I'm not going to use the a prompt with built-in git support
-#source $HOME/.zsh/async-git-prompt.plugin.zsh
 
 if [[ -e "/usr/share/nvm/init-nvm.sh" ]]
 then
@@ -462,15 +366,6 @@ then
 fi
 
 complete -o nospace -C /usr/bin/terraform terraform
-
-#compdef nala
-
-_nala_completion() {
-  eval $(env _TYPER_COMPLETE_ARGS="${words[1,$CURRENT]}" _NALA_COMPLETE=complete_zsh nala)
-}
-
-compdef _nala_completion nala
-
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -517,29 +412,7 @@ cd() {
 	check_directory_for_new_repository
 }
 
-j() {
-    z "$@"
-    check_directory_for_new_repository
-}
-
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-function yy() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		builtin cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
-}
-
-#if type zellij > /dev/null 2>&1
-#then
-#	export ZELLIJ_AUTO_ATTACH=false
-#	if [[ $TERM_PROGRAM != vscode ]]; then
-#  		eval "$(zellij setup --generate-auto-start zsh)"
-#	fi
-#fi
 
 if type pyenv > /dev/null 2>&1
 then
@@ -550,3 +423,4 @@ fi
 
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
+

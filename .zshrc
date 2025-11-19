@@ -92,6 +92,10 @@ case "$OSTYPE" in
         export PATH="/opt/homebrew/opt/ruby/bin:/opt/homebrew/lib/ruby/gems/3.3.0/bin:$PATH"
         export HOMEBREW_NO_ENV_HINTS=1
         export DOCKER_HOST="unix://$HOME/.colima/docker.sock"
+	if [ -d /opt/homebrew/opt/rabbitmq/sbin ]
+	then
+	    export PATH="$PATH:/opt/homebrew/opt/rabbitmq/sbin"
+	fi
 esac
 
 

@@ -84,6 +84,17 @@ case "$OSTYPE" in
         then
             eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
         fi
+        # Check if running on Ubuntu and set up tmp directory
+        # This is necessary to allow mdview to work with web browsers
+        # installed via snap.
+        if [ -f /etc/os-release ] && grep -qi ubuntu /etc/os-release
+        then
+            if [ ! -d "$HOME/tmp" ]
+            then
+                mkdir -p "$HOME/tmp"
+            fi
+            export TMPDIR="$HOME/tmp"
+        fi
         ;;
     darwin*)
         export PATH="/opt/homebrew/bin:/usr/local/opt/coreutils/libexec/gnubin:$PATH"

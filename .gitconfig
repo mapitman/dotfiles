@@ -2,8 +2,7 @@
     email = mark@pitman.io
     name = Mark Pitman
 [core]
-    editor = nvim -c'norm! ggj'
-    #editor = nvim
+    editor = vim -c'norm! ggj'
     preloadindex = true
     fscache = true
   pager = less -FRX

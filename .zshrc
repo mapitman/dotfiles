@@ -186,7 +186,7 @@ export PATH
 
 # Variables
 
-export EDITOR="nvim"
+export EDITOR="vim"
 export VISUAL="$EDITOR"
 export _JAVA_AWT_WM_NONREPARENTING=1
 export GOPATH="$HOME/go"

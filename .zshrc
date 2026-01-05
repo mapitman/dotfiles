@@ -222,7 +222,6 @@ case "$OSTYPE" in
         alias xclip='pbcopy'
         #alias dotnet="TERM=xterm dotnet"
         alias update="if type brew > /dev/null 2>&1; then brew update; brew upgrade; fi; omz update;"
-        alias vim="nvim"
         ;;
 esac
 

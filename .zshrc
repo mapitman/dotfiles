@@ -247,13 +247,6 @@ then
   alias vim=nvim
 fi
 
-if type bat >/dev/null 2>&1 
-then
-    alias cat=bat
-elif type batcat >/dev/null 2>&1
-then
-    alias cat=batcat
-fi
 alias branchowners="git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n | grep remotes | grep -v HEAD | grep -v fi | grep -v master"
 alias gosrc="cd $GOPATH/src/"
 alias tf=terraform

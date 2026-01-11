@@ -82,6 +82,7 @@ source $ZSH/oh-my-zsh.sh
 case "$OSTYPE" in
     linux*)
         export XDG_DATA_DIRS=$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:/home/mark/.local/share/flatpak/exports/share
+        export XDG_CONFIG_HOME=$HOME/.config
         if [ -e /home/linuxbrew/.linuxbrew/bin ]
         then
             eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
@@ -431,3 +432,5 @@ fi
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 
+
+export GH_PAGER=cat

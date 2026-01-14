@@ -101,13 +101,14 @@ case "$OSTYPE" in
         ;;
     darwin*)
         export PATH="/opt/homebrew/bin:/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-        export PATH="/opt/homebrew/opt/ruby/bin:/opt/homebrew/lib/ruby/gems/3.4.0/bin:$PATH"
+        #export PATH="/opt/homebrew/opt/ruby/bin:/opt/homebrew/lib/ruby/gems/4.0.0/bin:$PATH"
         export HOMEBREW_NO_ENV_HINTS=1
         export DOCKER_HOST="unix://$HOME/.colima/docker.sock"
 	if [ -d /opt/homebrew/opt/rabbitmq/sbin ]
 	then
 	    export PATH="$PATH:/opt/homebrew/opt/rabbitmq/sbin"
 	fi
+        eval "$(rbenv init - zsh)"
 esac
 
 

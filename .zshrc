@@ -128,18 +128,6 @@ then
     PATH="$PATH:$HOME/.dotnet/tools"
 fi
 
-if ! [[ "$PATH" =~ "$HOME/.gem/ruby/2.7.0/bin" ]]
-then
-    PATH="$PATH:$HOME/.gem/ruby/2.7.0/bin"
-fi
-
-if [[ -e $HOME/.local/share/gem/ruby/3.0.0/bin ]]
-then
-   if ! [[ "$PATH" =~ "$HOME/.local/share/gem/ruby/3.0.0/bin" ]] 
-   then
-       PATH="$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin"
-   fi
-fi
 
 if [[ -e $HOME/.local/tfenv/bin ]]
 then

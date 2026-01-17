@@ -424,7 +424,9 @@ eval "$(zoxide init zsh)"
 
 export GH_PAGER=cat
 
-if [[ $TERM_PROGRAM != "tmux" && $TERM != "screen"*  && $TERM_PROGRAM != "vscode"]] && command -v tmux > /dev/null 2>&1
+cd $HOME
+
+if [[ $TERM_PROGRAM != "tmux" && $TERM != "screen"*  && $TERM_PROGRAM != "vscode" ]] && command -v tmux > /dev/null 2>&1
 then
     tmux attach -t default || tmux new -s default
 fi

@@ -426,6 +426,12 @@ export GH_PAGER=cat
 
 cd $HOME
 
+if type vivid > /dev/null 2>&1
+then
+    export LS_COLORS="$(vivid generate catppuccin-mocha)"
+fi
+
+# This needs to be at the end of the file since it will launch tmux
 if [[ $TERM_PROGRAM != "tmux" && $TERM != "screen"*  && $TERM_PROGRAM != "vscode" ]] && command -v tmux > /dev/null 2>&1
 then
     tmux attach -t default || tmux new -s default

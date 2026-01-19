@@ -424,8 +424,6 @@ eval "$(zoxide init zsh)"
 
 export GH_PAGER=cat
 
-cd $HOME
-
 if type vivid > /dev/null 2>&1
 then
     export LS_COLORS="$(vivid generate catppuccin-mocha)"

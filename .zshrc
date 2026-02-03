@@ -118,6 +118,11 @@ then
     PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
 
+if ! [[ "$MANPATH" =~ "$HOME/.local/share/man" ]]
+then
+    MANPATH="$HOME/.local/share/man:$MANPATH"
+fi
+
 if ! [[ "$PATH" =~ "$HOME/go/bin" ]]
 then
     PATH="$HOME/go/bin:$PATH"
@@ -409,7 +414,6 @@ cd() {
 	check_directory_for_new_repository
 }
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 if type pyenv > /dev/null 2>&1
 then
@@ -434,3 +438,4 @@ if [[ $TERM_PROGRAM != "tmux" && $TERM != "screen"*  && $TERM_PROGRAM != "vscode
 then
     tmux attach -t default || tmux new -s default
 fi
+eval "$(atuin init zsh)"

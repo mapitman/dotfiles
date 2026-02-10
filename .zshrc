@@ -442,8 +442,11 @@ fi
 if [[ -f "$HOME/.atuin/bin/env" ]]
 then
     . "$HOME/.atuin/bin/env"
-elif command -v atuin > /dev/null 2>&1
+fi
+
+if command -v atuin > /dev/null 2>&1
 then
+    export TERM=xterm-256color
     eval "$(atuin init zsh)"
 fi
 

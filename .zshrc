@@ -433,9 +433,27 @@ then
     export LS_COLORS="$(vivid generate catppuccin-mocha)"
 fi
 
+
+if command -v mise > /dev/null 2>&1
+then
+    eval "$(mise activate zsh)"
+fi
+
+if [[ -f "$HOME/.atuin/bin/env" ]]
+then
+    . "$HOME/.atuin/bin/env"
+elif command -v atuin > /dev/null 2>&1
+then
+    eval "$(atuin init zsh)"
+fi
+
 # This needs to be at the end of the file since it will launch tmux
-if [[ $TERM_PROGRAM != "tmux" && $TERM != "screen"*  && $TERM_PROGRAM != "vscode" ]] && command -v tmux > /dev/null 2>&1
+if [[ $TERM_PROGRAM != "tmux" \
+    && $TERM != "screen"* \
+    && $TERM_PROGRAM != "vscode" \
+    && -z "$SSH_CONNECTION" \
+    && -z "$SSH_CLIENT" ]] \
+    && command -v tmux > /dev/null 2>&1
 then
     tmux attach -t default || tmux new -s default
 fi
-eval "$(atuin init zsh)"

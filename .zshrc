@@ -433,21 +433,14 @@ then
     export LS_COLORS="$(vivid generate catppuccin-mocha)"
 fi
 
-
 if command -v mise > /dev/null 2>&1
 then
     eval "$(mise activate zsh)"
 fi
 
-if [[ -f "$HOME/.atuin/bin/env" ]]
+if command -v fzf > /dev/null 2>&1
 then
-    . "$HOME/.atuin/bin/env"
-fi
-
-if command -v atuin > /dev/null 2>&1
-then
-    export TERM=xterm-256color
-    eval "$(atuin init zsh)"
+    source <(fzf --zsh)
 fi
 
 # This needs to be at the end of the file since it will launch tmux
@@ -460,3 +453,4 @@ if [[ $TERM_PROGRAM != "tmux" \
 then
     tmux attach -t default || tmux new -s default
 fi
+

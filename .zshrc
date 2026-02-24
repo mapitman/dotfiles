@@ -422,9 +422,12 @@ then
 	eval "$(pyenv init -)"
 fi
 
-eval "$(starship init zsh)"
-eval "$(zoxide init zsh)"
+if command -v mise > /dev/null 2>&1
+then
+    eval "$(mise activate zsh)"
+fi
 
+eval "$(zoxide init zsh)"
 
 export GH_PAGER=cat
 
@@ -433,15 +436,12 @@ then
     export LS_COLORS="$(vivid generate catppuccin-mocha)"
 fi
 
-if command -v mise > /dev/null 2>&1
-then
-    eval "$(mise activate zsh)"
-fi
-
 if command -v fzf > /dev/null 2>&1
 then
     source <(fzf --zsh)
 fi
+
+eval "$(starship init zsh)"
 
 # This needs to be at the end of the file since it will launch tmux
 if [[ $TERM_PROGRAM != "tmux" \
@@ -451,6 +451,6 @@ if [[ $TERM_PROGRAM != "tmux" \
     && -z "$SSH_CLIENT" ]] \
     && command -v tmux > /dev/null 2>&1
 then
-    tmux attach -t default || tmux new -s default
+    tmux attach -t default > /dev/null 2>&1 || tmux new -s default
 fi
 

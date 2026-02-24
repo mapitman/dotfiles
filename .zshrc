@@ -451,6 +451,6 @@ if [[ $TERM_PROGRAM != "tmux" \
     && -z "$SSH_CLIENT" ]] \
     && command -v tmux > /dev/null 2>&1
 then
-    tmux attach -t default > /dev/null 2>&1 || tmux new -s default
+    tmux attach -t default > /dev/null 2>&1 || exec tmux new -s default
 fi
 

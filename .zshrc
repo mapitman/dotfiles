@@ -206,7 +206,12 @@ export MOZ_ENABLE_WAYLAND=1
 
 case "$OSTYPE" in
     linux*)
-        alias ls='ls --color=auto'
+        if command -v eza >/dev/null 2>&1
+        then
+            alias ls=eza
+        else
+            alias ls='ls --color=auto'
+        fi
         alias xclip='xclip -selection clipboard'
         if [[ $XDG_SESSION_DESKTOP = "hyprland" ]]
         then
@@ -253,25 +258,43 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias topten="history | awk '{print $2}' | sort | uniq -c | sort -rn | head -n 10"
 alias redis-cli='docker run --rm -it mapitman/redis-cli'
 
-# if uname -a | grep -q Microsoft || uname -a | grep -q Ubuntu
 if [ -f "/etc/os-release" ]
 then
-  if grep -Fiq "ubuntu" /etc/os-release
-  then
-    alias update="if type snap > /dev/null 2>&1; then echo 'Updating snaps...'; sudo snap refresh; fi; if type flatpak > /dev/null 2>&1; then echo 'Updating Flatpaks...'; flatpak update; fi; echo 'Updating packages...'; if type nala > /dev/null 2>&1; then sudo nala upgrade; else sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y; fi; if type deb-get > /dev/null 2>&1; then deb-get update; deb-get upgrade; fi; omz update"
-  elif grep -Fiq "fedora" /etc/os-release
-  then 
-    alias update="sudo dnf upgrade -y; omz update"
-  elif grep -Fiq "msys2" /etc/os-release
-  then
-    alias update="pacman -Syu --noconfirm; omz update"
-  elif grep -Fiq "arch" /etc/os-release && type omarchy-update >/dev/null 2>&1
-  then
-    alias update="omarchy-update; omz update"
-  elif grep -Fiq "arch" /etc/os-release
-  then
-    alias update="yay -Syu --noconfirm; omz update"
-  fi
+    update() {
+        if grep -Fiq "ubuntu" /etc/os-release
+        then
+            if type snap > /dev/null 2>&1; then echo 'Updating snaps...'; sudo snap refresh; fi
+            if type flatpak > /dev/null 2>&1; then echo 'Updating Flatpaks...'; flatpak update; fi
+            echo 'Updating packages...'
+            if type nala > /dev/null 2>&1; then sudo nala upgrade; else sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y; fi
+            if type deb-get > /dev/null 2>&1; then deb-get update; deb-get upgrade; fi
+            omz update
+        elif grep -Fiq "fedora" /etc/os-release
+        then
+            sudo dnf upgrade -y
+            omz update
+        elif grep -Fiq "msys2" /etc/os-release
+        then
+            pacman -Syu --noconfirm
+            omz update
+        elif grep -Fiq "arch" /etc/os-release && type omarchy-update >/dev/null 2>&1
+        then
+            omarchy-update
+            omz update
+        elif grep -Fiq "arch" /etc/os-release
+        then
+            yay -Syu --noconfirm
+            omz update
+        elif grep -Fiq "debian" /etc/os-release
+        then
+            sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
+            if type deb-get > /dev/null 2>&1; then deb-get update; deb-get upgrade; fi
+            omz update
+        else
+            echo "update: unsupported Linux distribution"
+            return 1
+        fi
+    }
 fi
 
 fpath+=$HOME/.zsh/functions
@@ -445,12 +468,12 @@ eval "$(starship init zsh)"
 
 # This needs to be at the end of the file since it will launch tmux
 if [[ $TERM_PROGRAM != "tmux" \
-    && $TERM != "screen"* \
-    && $TERM_PROGRAM != "vscode" \
-    && -z "$SSH_CONNECTION" \
-    && -z "$SSH_CLIENT" ]] \
-    && command -v tmux > /dev/null 2>&1
+   && $TERM != "screen"* \
+   && $TERM_PROGRAM != "vscode" \
+   && -z "$SSH_CONNECTION" \
+   && -z "$SSH_CLIENT" ]] \
+   && command -v tmux > /dev/null 2>&1
 then
-    tmux attach -t default > /dev/null 2>&1 || exec tmux new -s default
+   tmux attach -t default > /dev/null 2>&1 || tmux new -s default
 fi
 

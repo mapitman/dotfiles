@@ -79,37 +79,21 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-case "$OSTYPE" in
-    linux*)
-        export XDG_DATA_DIRS=$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:/home/mark/.local/share/flatpak/exports/share
-        export XDG_CONFIG_HOME=$HOME/.config
-        if [ -e /home/linuxbrew/.linuxbrew/bin ]
-        then
-            eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-        fi
-        # Check if running on Ubuntu and set up tmp directory
-        # This is necessary to allow mdview to work with web browsers
-        # installed via snap.
-        if [ -f /etc/os-release ] && grep -qi ubuntu /etc/os-release
-        then
-            if [ ! -d "$HOME/tmp" ]
-            then
-                mkdir -p "$HOME/tmp"
-            fi
-            export TMPDIR="$HOME/tmp"
-        fi
-        ;;
-    darwin*)
-        export PATH="/opt/homebrew/bin:/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-        #export PATH="/opt/homebrew/opt/ruby/bin:/opt/homebrew/lib/ruby/gems/4.0.0/bin:$PATH"
-        export HOMEBREW_NO_ENV_HINTS=1
-        export DOCKER_HOST="unix://$HOME/.colima/docker.sock"
-	if [ -d /opt/homebrew/opt/rabbitmq/sbin ]
-	then
-	    export PATH="$PATH:/opt/homebrew/opt/rabbitmq/sbin"
-	fi
-        eval "$(rbenv init - zsh)"
-esac
+export XDG_DATA_DIRS=$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:/home/mark/.local/share/flatpak/exports/share
+export XDG_CONFIG_HOME=$HOME/.config
+if [ -e /home/linuxbrew/.linuxbrew/bin ]
+then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+# Set up tmp directory to allow mdview to work with browsers installed via snap.
+if [ -f /etc/os-release ] && grep -qi ubuntu /etc/os-release
+then
+    if [ ! -d "$HOME/tmp" ]
+    then
+        mkdir -p "$HOME/tmp"
+    fi
+    export TMPDIR="$HOME/tmp"
+fi
 
 
 # User specific environment
@@ -204,28 +188,18 @@ export MOZ_ENABLE_WAYLAND=1
 
 # Aliases and functions
 
-case "$OSTYPE" in
-    linux*)
-        if command -v eza >/dev/null 2>&1
-        then
-            alias ls=eza
-        else
-            alias ls='ls --color=auto'
-        fi
-        alias xclip='xclip -selection clipboard'
-        if [[ $XDG_SESSION_DESKTOP = "hyprland" ]]
-        then
-            alias hyprconf="vim ~/.config/hypr/hyprland.conf"
-            alias waybarconf="vim ~/.config/waybar/config"
-        fi
-        ;;
-    darwin*)
-        alias start="open"
-        alias xclip='pbcopy'
-        #alias dotnet="TERM=xterm dotnet"
-        alias update="if type brew > /dev/null 2>&1; then brew update; brew upgrade; fi; omz update;"
-        ;;
-esac
+if command -v eza >/dev/null 2>&1
+then
+    alias ls=eza
+else
+    alias ls='ls --color=auto'
+fi
+alias xclip='xclip -selection clipboard'
+if [[ $XDG_SESSION_DESKTOP = "hyprland" ]]
+then
+    alias hyprconf="vim ~/.config/hypr/hyprland.conf"
+    alias waybarconf="vim ~/.config/waybar/config"
+fi
 
 alias ll="ls -lh"
 alias grep='grep --color=auto'
@@ -273,10 +247,6 @@ then
         then
             sudo dnf upgrade -y
             omz update
-        elif grep -Fiq "msys2" /etc/os-release
-        then
-            pacman -Syu --noconfirm
-            omz update
         elif grep -Fiq "arch" /etc/os-release && type omarchy-update >/dev/null 2>&1
         then
             omarchy-update
@@ -310,28 +280,17 @@ function loadavg() {
 
 rider ()
 {
-    case "$OSTYPE" in
-        linux*)
-            # Before this will work, the file types must be associated
-            # https://www.jetbrains.com/help/rider/Creating_and_Registering_File_Types.html
-            rider=xdg-open
-        ;;
-        darwin*)
-            rider=$HOME/Applications/Rider.app/Contents/MacOS/rider
-        ;;
-    esac
-
     files=(./*.sln(N))
     if [[ -e ${files[@]:0:1} ]]
     then
         echo "opening ${files[@]:0:1}..."
-        eval $rider ${files[@]:0:1} >/dev/null 2>&1 &
+        xdg-open ${files[@]:0:1} >/dev/null 2>&1 &
     else
         files=(./*.csproj(N))
         echo "opening ${files[@]:0:1}..."
         if [[ -e ${files[@]:0:1} ]]
         then
-            eval $rider ${files[@]:0:1} >/dev/null 2>&1 &
+            xdg-open ${files[@]:0:1} >/dev/null 2>&1 &
         fi
     fi
 }
@@ -398,21 +357,7 @@ export NVM_DIR="$HOME/.nvm"
 
 
 # Safer alternatives to `rm`
-if [[ $VENDOR == apple ]]; then
-  trash() {
-    local -aU items=( $^@(N) )
-    local -aU missing=( ${@:|items} )
-    (( $#missing )) &&
-        print -u2 "trash: no such file(s): $missing"
-    (( $#items )) ||
-        return 66
-    print Moving $( eval ls -d -- ${(q)items[@]%/} ) to Trash.
-    items=( '(POSIX file "'${^items[@]:A}'")' )
-    osascript -e 'tell application "Finder" to delete every item of {'${(j:, :)items}'}' \
-        > /dev/null
-  }
-elif command -v gio > /dev/null; then
-  # gio is available for macOS, but gio trash DOES NOT WORK correctly there.
+if command -v gio > /dev/null; then
   alias trash='gio trash'
 fi
 
@@ -477,3 +422,6 @@ then
    tmux attach -t default > /dev/null 2>&1 || tmux new -s default
 fi
 
+
+# Pango 1.56.x workaround for variable font crash (see ~/.config/fontconfig/fonts-pango.conf)
+export FONTCONFIG_FILE="$HOME/.config/fontconfig/fonts-pango.conf"

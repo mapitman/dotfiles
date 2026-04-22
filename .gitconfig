@@ -10,8 +10,6 @@
     template = ~/.git-commit-template
 [gc]
 	auto = 256
-[include]
-    path = .gitconfig.local
 [merge]
 	tool = kdiff3
 [alias]
@@ -20,8 +18,6 @@
     rebase = true
 [include]
     path = ~/.gitconfig.local
-[includeIf "gitdir:~/src/work/"]
-    path = .gitconfig-work
 
 [oh-my-zsh]
 	hide-info = 1

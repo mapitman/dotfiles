@@ -1,29 +1,28 @@
 [user]
-    email = mark@pitman.io
-    name = Mark Pitman
+email = mark@pitman.io
+name = Mark Pitman
 [core]
-    editor = vim -c'norm! ggj'
-    preloadindex = true
-    fscache = true
-  pager = less -FRX
+editor = vim -c'norm! ggj'
+preloadindex = true
+fscache = true
+pager = less -FRX
 [commit]
-    template = ~/.git-commit-template
+template = ~/.git-commit-template
 [gc]
-	auto = 256
+auto = 256
 [merge]
-	tool = kdiff3
-[alias]
-    graph = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-[pull]
-    rebase = true
-
-[oh-my-zsh]
-	hide-info = 1
-[init]
-	defaultBranch = main
-[gui]
-	fontdiff = -family \"Cascadia Code\" -size 10 -weight normal -slant roman -underline 0 -overstrike 0
+tool = kdiff3
 [mergetool]
-	prompt = false
+prompt = false
+[alias]
+graph = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+[pull]
+rebase = true
 [push]
-	autoSetupRemote = true
+autoSetupRemote = true
+[init]
+defaultBranch = main
+[gui]
+fontdiff = -family \"Cascadia Code\" -size 10 -weight normal -slant roman -underline 0 -overstrike 0
+[oh-my-zsh]
+hide-info = 1

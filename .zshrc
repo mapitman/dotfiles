@@ -1,91 +1,32 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# =============================================================================
+# Oh-My-Zsh
+# =============================================================================
 
-# Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
- ZSH_THEME=""
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
+ZSH_THEME=""
 DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
 COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
 
 source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
 
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
 plugins=(zsh-autosuggestions docker zsh-syntax-highlighting web-search copybuffer)
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
+# =============================================================================
+# Environment
+# =============================================================================
 
 export XDG_DATA_DIRS=$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:/home/mark/.local/share/flatpak/exports/share
 export XDG_CONFIG_HOME=$HOME/.config
+
 if [ -e /home/linuxbrew/.linuxbrew/bin ]
 then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
-# Set up tmp directory to allow mdview to work with browsers installed via snap.
+
+# Set up a writable tmp directory so mdview can work with snap-installed browsers
 if [ -f /etc/os-release ] && grep -qi ubuntu /etc/os-release
 then
     if [ ! -d "$HOME/tmp" ]
@@ -95,143 +36,100 @@ then
     export TMPDIR="$HOME/tmp"
 fi
 
+# PATH additions (guard against duplicates on shell reload)
+_path_prepend() { [[ ":$PATH:" != *":$1:"* ]] && PATH="$1:$PATH"; }
+_path_append()  { [[ ":$PATH:" != *":$1:"* ]] && PATH="$PATH:$1"; }
 
-# User specific environment
-if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
-then
-    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
-fi
-
-if ! [[ "$MANPATH" =~ "$HOME/.local/share/man" ]]
-then
-    MANPATH="$HOME/.local/share/man:$MANPATH"
-fi
-
-if ! [[ "$PATH" =~ "$HOME/go/bin" ]]
-then
-    PATH="$HOME/go/bin:$PATH"
-fi
-
-if ! [[ "$PATH" =~ "$HOME/.dotnet/tools" ]]
-then
-    PATH="$PATH:$HOME/.dotnet/tools"
-fi
-
-
-if [[ -e $HOME/.local/tfenv/bin ]]
-then
-   if ! [[ "$PATH" =~ "$HOME/.local/tfenv/bin" ]] 
-   then
-       PATH="$PATH:$HOME/.local/tfenv/bin"
-   fi
-fi
-# Flatpak helpers
-if [[ -e $HOME/.local/share/flatpak/exports/bin ]]
-then
-    if ! [[ "$PATH" =~ "$HOME/.local/share/flatpak/exports/bin" ]]
-    then
-        PATH=$PATH:$HOME/.local/share/flatpak/exports/bin
-    fi
-fi
-
-if [[ -e /var/lib/flatpak/exports/bin ]]
-then
-    if ! [[ "$PATH" =~ "$/var/lib/flatpak/exports/bin" ]]
-    then
-        PATH=$PATH:/var/lib/flatpak/exports/bin
-    fi
-fi
-
-if [[ -e "$HOME/.tfenv/bin" ]]
-then
-    if ! [[ "$PATH" =~ "$HOME/.tfenv/bin" ]]
-    then
-        PATH="$HOME/.tfenv/bin:$PATH"
-    fi
-fi
-
-if [[ -e $HOME/android-studio/bin ]]
-then
-   if ! [[ "$PATH" =~ "$HOME/android-studio/bin" ]] 
-   then
-       PATH="$PATH:$HOME/android-studio/bin"
-   fi
-fi
-
-if [[ -e $HOME/Android/Sdk/cmdline-tools/bin ]]
-then
-   if ! [[ "$PATH" =~ "$HOME/Android/Sdk/cmdline-tools/bin" ]] 
-   then
-       PATH="$PATH:$HOME/Android/Sdk/cmdline-tools/bin"
-   fi
-fi
-
-if [[ -e $HOME/.cargo/bin ]]
-then
-    if ! [[ "$PATH" =~ "$HOME/.cargo/bin" ]]
-    then
-        PATH="$PATH:$HOME/.cargo/bin"
-    fi
-fi
+_path_prepend "$HOME/.local/bin"
+_path_prepend "$HOME/bin"
+_path_prepend "$HOME/go/bin"
+_path_prepend "$HOME/.cargo/bin"
+[[ -e "$HOME/.tfenv/bin" ]]                        && _path_prepend "$HOME/.tfenv/bin"
+[[ -e "$HOME/.local/tfenv/bin" ]]                  && _path_prepend "$HOME/.local/tfenv/bin"
+[[ -e "$HOME/.dotnet/tools" ]]                     && _path_append  "$HOME/.dotnet/tools"
+[[ -e "$HOME/.local/share/flatpak/exports/bin" ]]  && _path_append  "$HOME/.local/share/flatpak/exports/bin"
+[[ -e "/var/lib/flatpak/exports/bin" ]]            && _path_append  "/var/lib/flatpak/exports/bin"
+[[ -e "$HOME/android-studio/bin" ]]                && _path_append  "$HOME/android-studio/bin"
+[[ -e "$HOME/Android/Sdk/cmdline-tools/bin" ]]     && _path_append  "$HOME/Android/Sdk/cmdline-tools/bin"
 
 export PATH
 
-# Variables
+[[ ":$MANPATH:" != *":$HOME/.local/share/man:"* ]] && MANPATH="$HOME/.local/share/man:$MANPATH"
 
 export EDITOR="vim"
 export VISUAL="$EDITOR"
-export _JAVA_AWT_WM_NONREPARENTING=1
 export GOPATH="$HOME/go"
+export _JAVA_AWT_WM_NONREPARENTING=1  # Required for Java GUIs on tiling WMs
 export MOZ_ENABLE_WAYLAND=1
+export GH_PAGER=cat
 
+# =============================================================================
+# Aliases
+# =============================================================================
 
-
-# Aliases and functions
-
+# ls
 if command -v eza >/dev/null 2>&1
 then
     alias ls=eza
 else
     alias ls='ls --color=auto'
 fi
+alias ll="ls -lh"
+
+# grep
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# Navigation & shell
+alias h="cd ~"
+alias cls='clear'
 alias xclip='xclip -selection clipboard'
+alias printenv='printenv | grep -v LS_COLORS | sort'
+
+# Config editing shortcuts
+alias bashrc="vim ~/.bashrc && exec bash"
+alias zshrc="vim ~/.zshrc && omz reload"
 if [[ $XDG_SESSION_DESKTOP = "hyprland" ]]
 then
     alias hyprconf="vim ~/.config/hypr/hyprland.conf"
     alias waybarconf="vim ~/.config/waybar/config"
 fi
 
-alias ll="ls -lh"
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
-alias bashrc="vim ~/.bashrc && exec bash"
-alias h="cd ~"
-alias cls='clear'
-alias printenv='printenv | grep -e LS_COLORS -v | sort'
-alias wgup='sudo wg-quick up wg0'
-alias wgdown='sudo wg-quick down wg0'
-alias zshrc="vim ~/.zshrc && omz reload"
+# Git
 alias fix-main="git pull -p; git checkout main && git remote set-head origin -a"
 alias rename-to-main="pwsh -Command Rename-GitlabProjectDefaultBranch main"
-alias new-guid="pwsh -c New-Guid"
-
-if type nvim >/dev/null 2>&1
-then
-  alias vim=nvim
-fi
-
 alias branchowners="git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n | grep remotes | grep -v HEAD | grep -v fi | grep -v master"
-alias gosrc="cd $GOPATH/src/"
-alias tf=terraform
 
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
+# Tools
+alias tf=terraform
+alias gosrc="cd $GOPATH/src/"
+alias redis-cli='docker run --rm -it mapitman/redis-cli'
+alias new-guid="pwsh -c New-Guid"
+alias wgup='sudo wg-quick up wg0'
+alias wgdown='sudo wg-quick down wg0'
+alias topten="history | awk '{print \$2}' | sort | uniq -c | sort -rn | head -n 10"
+
+# Desktop notification on completion of a long-running command: `sleep 10; alert`
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-alias topten="history | awk '{print $2}' | sort | uniq -c | sort -rn | head -n 10"
-alias redis-cli='docker run --rm -it mapitman/redis-cli'
+# Use neovim as vim if available
+if type nvim >/dev/null 2>&1
+then
+    alias vim=nvim
+fi
 
+# Safe file removal via gio trash
+if command -v gio > /dev/null
+then
+    alias trash='gio trash'
+fi
+
+# =============================================================================
+# Functions
+# =============================================================================
+
+# Distro-aware system update
 if [ -f "/etc/os-release" ]
 then
     update() {
@@ -267,151 +165,167 @@ then
     }
 fi
 
-fpath+=$HOME/.zsh/functions
-autoload -Uz compinit && compinit
-autoload -U +X bashcompinit && bashcompinit
-
-# Source my file with some private info that I do not want exposed on GitHub
-if [[ -e ~/.private ]]; then source ~/.private; fi
-
-function loadavg() {
+# Show load averages in a readable format
+loadavg() {
     awk '{ printf("1-minute: %s\n5-minute: %s\n15-minute: %s\n",$1,$2,$3); }' /proc/loadavg
 }
 
-rider ()
-{
-    files=(./*.sln(N))
+# Open the nearest .sln or .csproj with JetBrains Rider via xdg-open
+rider() {
+    local files=(./*.sln(N))
     if [[ -e ${files[@]:0:1} ]]
     then
         echo "opening ${files[@]:0:1}..."
         xdg-open ${files[@]:0:1} >/dev/null 2>&1 &
     else
         files=(./*.csproj(N))
-        echo "opening ${files[@]:0:1}..."
         if [[ -e ${files[@]:0:1} ]]
         then
+            echo "opening ${files[@]:0:1}..."
             xdg-open ${files[@]:0:1} >/dev/null 2>&1 &
         fi
     fi
 }
 
-function glab-run-branch() {
+# Trigger a GitLab CI pipeline on the current branch
+glab-run-branch() {
     glab ci run -b $(git rev-parse --abbrev-ref HEAD)
 }
 
-function rm-branches() {
-    # Check if the current path is a Git repository
-    if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-        echo "Not a Git repository. Exiting..."
-        exit 1
+# Delete all local branches except the repo default
+rm-branches() {
+    if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1
+    then
+        echo "Not a Git repository."
+        return 1
     fi
-
-    # Delete each branch except the default branch
-    default_branch=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
-    for branch in $(git branch --list | grep -v $default_branch); do
-        git branch -D $branch
+    local default_branch=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+    for branch in $(git branch --list | grep -v "$default_branch")
+    do
+        git branch -D "$branch"
     done
 }
 
-# zsh parameter completion for the dotnet CLI
-_dotnet_zsh_complete()
-{
-  local completions=("$(dotnet complete "$words")")
-  reply=( "${(ps:\n:)completions}" )
+# Show onefetch repo summary when entering a new git repository
+last_repository=
+check_directory_for_new_repository() {
+    current_repository=$(git rev-parse --show-toplevel 2>/dev/null)
+    if [ "$current_repository" ] && \
+       [ "$current_repository" != "$last_repository" ] && \
+       type onefetch >/dev/null 2>&1
+    then
+        onefetch
+    fi
+    last_repository=$current_repository
 }
 
+cd() {
+    builtin cd "$@"
+    check_directory_for_new_repository
+}
+
+# =============================================================================
+# Completions
+# =============================================================================
+
+fpath+=$HOME/.zsh/functions
+fpath+=~/.zfunc
+autoload -Uz compinit && compinit
+autoload -U +X bashcompinit && bashcompinit
+
+# Terraform
+complete -o nospace -C /usr/bin/terraform terraform
+
+# dotnet CLI tab completion
+_dotnet_zsh_complete() {
+    local completions=("$(dotnet complete "$words")")
+    reply=( "${(ps:\n:)completions}" )
+}
 compctl -K _dotnet_zsh_complete dotnet
 
+# git-extras
+if [[ -e "$HOME/.zsh/git-extras-completion.zsh" ]]
+then
+    source "$HOME/.zsh/git-extras-completion.zsh"
+fi
 
+zstyle ':completion:*' menu select
 
-
-# This speeds up pasting w/ autosuggest
+# Avoid slowdown when pasting with zsh-autosuggestions active
 # https://github.com/zsh-users/zsh-autosuggestions/issues/238
 pasteinit() {
-  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
-  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+    OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+    zle -N self-insert url-quote-magic
 }
-
 pastefinish() {
-  zle -N self-insert $OLD_SELF_INSERT
+    zle -N self-insert $OLD_SELF_INSERT
 }
 zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 
+# =============================================================================
+# Tool Initialization
+# =============================================================================
 
+# nvm — system install (e.g. Arch AUR)
 if [[ -e "/usr/share/nvm/init-nvm.sh" ]]
 then
     source /usr/share/nvm/init-nvm.sh
 fi
 
-if [[ -e "$HOME/.zsh/git-extras-completion.zsh" ]]
-then
-    source $HOME/.zsh/git-extras-completion.zsh
-fi
-
-complete -o nospace -C /usr/bin/terraform terraform
-
+# nvm — user install
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ]             && source "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ]    && source "$NVM_DIR/bash_completion"
 
-
-# Safer alternatives to `rm`
-if command -v gio > /dev/null; then
-  alias trash='gio trash'
-fi
-
-zstyle ':completion:*' menu select
-fpath+=~/.zfunc
-
-# git repository greeter
-last_repository=
-check_directory_for_new_repository() {
-	current_repository=$(git rev-parse --show-toplevel 2> /dev/null)
-	
-	if [ "$current_repository" ] && \
-	   [ "$current_repository" != "$last_repository" ] && \
-       type onefetch > /dev/null 2>&1; then
-		onefetch
-	fi
-	last_repository=$current_repository
-}
-
-cd() {
-	builtin cd "$@"
-	check_directory_for_new_repository
-}
-
-
+# pyenv
 if type pyenv > /dev/null 2>&1
 then
-	export PYENV_ROOT="$HOME/.pyenv"
-	[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-	eval "$(pyenv init -)"
+    export PYENV_ROOT="$HOME/.pyenv"
+    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
 fi
 
+# mise (dev tools version manager)
 if command -v mise > /dev/null 2>&1
 then
     eval "$(mise activate zsh)"
 fi
 
+# zoxide (smarter cd)
 eval "$(zoxide init zsh)"
 
-export GH_PAGER=cat
-
-if type vivid > /dev/null 2>&1
-then
-    export LS_COLORS="$(vivid generate catppuccin-mocha)"
-fi
-
+# fzf
 if command -v fzf > /dev/null 2>&1
 then
     source <(fzf --zsh)
 fi
 
+# vivid (generates LS_COLORS for catppuccin theme)
+if type vivid > /dev/null 2>&1
+then
+    export LS_COLORS="$(vivid generate catppuccin-mocha)"
+fi
+
+# Pango 1.56.x workaround for variable font crash
+# See ~/.config/fontconfig/fonts-pango.conf
+export FONTCONFIG_FILE="$HOME/.config/fontconfig/fonts-pango.conf"
+
+# starship prompt
 eval "$(starship init zsh)"
 
-# This needs to be at the end of the file since it will launch tmux
+# =============================================================================
+# Private / Local Config
+# =============================================================================
+
+if [[ -e ~/.private ]]; then source ~/.private; fi
+
+# =============================================================================
+# tmux Auto-attach (keep last — launches a new process)
+# =============================================================================
+
+# Automatically attach to (or create) a default tmux session.
+# Skipped when already in tmux, an SSH session, or VS Code terminal.
 if [[ $TERM_PROGRAM != "tmux" \
    && $TERM != "screen"* \
    && $TERM_PROGRAM != "vscode" \
@@ -419,9 +333,5 @@ if [[ $TERM_PROGRAM != "tmux" \
    && -z "$SSH_CLIENT" ]] \
    && command -v tmux > /dev/null 2>&1
 then
-   tmux attach -t default > /dev/null 2>&1 || tmux new -s default
+    tmux attach -t default > /dev/null 2>&1 || tmux new -s default
 fi
-
-
-# Pango 1.56.x workaround for variable font crash (see ~/.config/fontconfig/fonts-pango.conf)
-export FONTCONFIG_FILE="$HOME/.config/fontconfig/fonts-pango.conf"

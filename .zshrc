@@ -61,7 +61,6 @@ export VISUAL="$EDITOR"
 export GOPATH="$HOME/go"
 export _JAVA_AWT_WM_NONREPARENTING=1  # Required for Java GUIs on tiling WMs
 export MOZ_ENABLE_WAYLAND=1
-export GH_PAGER=cat
 
 # =============================================================================
 # Aliases
@@ -83,12 +82,10 @@ alias egrep='egrep --color=auto'
 
 # Navigation & shell
 alias h="cd ~"
-alias cls='clear'
 alias xclip='xclip -selection clipboard'
 alias printenv='printenv | grep -v LS_COLORS | sort'
 
 # Config editing shortcuts
-alias bashrc="vim ~/.bashrc && exec bash"
 alias zshrc="vim ~/.zshrc && omz reload"
 if [[ $XDG_SESSION_DESKTOP = "hyprland" ]]
 then
@@ -97,8 +94,6 @@ then
 fi
 
 # Git
-alias fix-main="git pull -p; git checkout main && git remote set-head origin -a"
-alias rename-to-main="pwsh -Command Rename-GitlabProjectDefaultBranch main"
 alias branchowners="git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n | grep remotes | grep -v HEAD | grep -v fi | grep -v master"
 
 # Tools
@@ -112,12 +107,6 @@ alias topten="history | awk '{print \$2}' | sort | uniq -c | sort -rn | head -n 
 
 # Desktop notification on completion of a long-running command: `sleep 10; alert`
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
-# Use neovim as vim if available
-if type nvim >/dev/null 2>&1
-then
-    alias vim=nvim
-fi
 
 # Safe file removal via gio trash
 if command -v gio > /dev/null
@@ -145,16 +134,13 @@ then
         then
             sudo dnf upgrade -y
             omz update
-        elif grep -Fiq "arch" /etc/os-release && type omarchy-update >/dev/null 2>&1
-        then
-            omarchy-update
-            omz update
         elif grep -Fiq "arch" /etc/os-release
         then
             yay -Syu --noconfirm
             omz update
         elif grep -Fiq "debian" /etc/os-release
         then
+            if type flatpak > /dev/null 2>&1; then echo 'Updating Flatpaks...'; flatpak update; fi
             sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
             if type deb-get > /dev/null 2>&1; then deb-get update; deb-get upgrade; fi
             omz update
@@ -185,11 +171,6 @@ rider() {
             xdg-open ${files[@]:0:1} >/dev/null 2>&1 &
         fi
     fi
-}
-
-# Trigger a GitLab CI pipeline on the current branch
-glab-run-branch() {
-    glab ci run -b $(git rev-parse --abbrev-ref HEAD)
 }
 
 # Delete all local branches except the repo default

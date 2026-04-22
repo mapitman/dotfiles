@@ -1,4 +1,0 @@
-[core]
-    autocrlf = false
-[merge]
-    tool = p4merge

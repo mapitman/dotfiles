@@ -276,10 +276,12 @@ fi
 # zoxide (smarter cd)
 eval "$(zoxide init zsh)"
 
-# fzf
+# fzf (--zsh flag requires 0.48+)
 if command -v fzf > /dev/null 2>&1
 then
-    source <(fzf --zsh)
+    if [[ $(fzf --version | cut -d. -f2) -ge 48 ]]; then
+        source <(fzf --zsh)
+    fi
 fi
 
 # vivid (generates LS_COLORS for catppuccin theme)

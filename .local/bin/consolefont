@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# Interactive console font picker — uses fzf for selection
+# Only useful at the Linux virtual console (TERM=linux)
+
+set -euo pipefail
+
+FONT_DIR="/usr/share/consolefonts"
+VCONSOLE_CONF="/etc/vconsole.conf"
+
+if [[ "$TERM" != "linux" ]]; then
+    echo "Warning: not running at the Linux console (TERM=$TERM)."
+    echo "Font changes will apply but won't be visible here."
+    read -rp "Continue anyway? [y/N] " ans
+    [[ "${ans,,}" == "y" ]] || exit 0
+fi
+
+# Get current font
+current=$(grep -oP '(?<=^FONT=)\S+' "$VCONSOLE_CONF" 2>/dev/null || echo "")
+echo "Current font: ${current:-(none)}"
+echo ""
+
+# Build font list
+mapfile -t fonts < <(ls "$FONT_DIR"/*.psf.gz 2>/dev/null | xargs -n1 basename | sed 's/\.psf\.gz$//' | sort)
+
+if [[ ${#fonts[@]} -eq 0 ]]; then
+    echo "No fonts found in $FONT_DIR"
+    exit 1
+fi
+
+# Use fzf with a preview that applies the font live
+chosen=$(printf '%s\n' "${fonts[@]}" \
+    | fzf --prompt="Select font: " \
+          --preview='setfont {} 2>/dev/null; echo "Previewing: {}"' \
+          --preview-window=up:1 \
+          --query="${current}" \
+          --bind='enter:accept' \
+    ) || { echo "Cancelled."; exit 0; }
+
+echo "Selected: $chosen"
+setfont "$chosen" 2>/dev/null || { echo "Failed to set font."; exit 1; }
+
+read -rp "Save as permanent? [y/N] " save
+if [[ "${save,,}" == "y" ]]; then
+    if grep -q '^FONT=' "$VCONSOLE_CONF" 2>/dev/null; then
+        sudo sed -i "s/^FONT=.*/FONT=$chosen/" "$VCONSOLE_CONF"
+    else
+        echo "FONT=$chosen" | sudo tee -a "$VCONSOLE_CONF" > /dev/null
+    fi
+    echo "Saved $chosen to $VCONSOLE_CONF"
+else
+    echo "Font set for this session only."
+fi
+

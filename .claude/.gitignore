@@ -1,0 +1,9 @@
+# Whitelist: ignore everything in ~/.claude by default, since most of it is
+# session data, caches, or credentials that shouldn't go in a public dotfiles repo.
+# Only the specific files below are tracked.
+*
+
+!.gitignore
+!CLAUDE.md
+!settings.json
+!statusline-command.sh

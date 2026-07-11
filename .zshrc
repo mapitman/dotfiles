@@ -131,6 +131,7 @@ alias redis-cli='docker run --rm -it mapitman/redis-cli'
 alias new-guid="pwsh -c New-Guid"
 alias wgup='sudo wg-quick up wg0'
 alias wgdown='sudo wg-quick down wg0'
+alias motd='run-parts /etc/update-motd.d/'
 alias topten="history | awk '{print \$2}' | sort | uniq -c | sort -rn | head -n 10"
 
 # Desktop notification on completion of a long-running command: `sleep 10; alert`

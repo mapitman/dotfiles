@@ -1,0 +1,8 @@
+{
+  "name": "Custom Dark",
+  "base": "dark",
+  "overrides": {
+    "inactive": "rgb(180,180,180)",
+    "subtle": "rgb(170,170,170)"
+  }
+}

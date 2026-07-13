@@ -1,8 +1,10 @@
 {
-  "theme": "dark",
-  "effortLevel": "medium",
   "statusLine": {
     "type": "command",
     "command": "bash ~/.claude/statusline-command.sh"
-  }
+  },
+  "effortLevel": "medium",
+  "theme": "custom:custom-dark",
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true
 }

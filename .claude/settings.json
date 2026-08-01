@@ -19,7 +19,8 @@
   },
   "effortLevel": "medium",
   "theme": "custom:custom-dark",
-  "remoteControlAtStartup": false,
+  "editorMode": "normal",
   "inputNeededNotifEnabled": true,
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "remoteControlAtStartup": true
 }

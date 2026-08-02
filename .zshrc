@@ -62,6 +62,26 @@ export GOPATH="$HOME/go"
 export _JAVA_AWT_WM_NONREPARENTING=1  # Required for Java GUIs on tiling WMs
 export MOZ_ENABLE_WAYLAND=1
 
+# Fixed high-contrast colors for whiptail/debconf dialogs (e.g. apt, needrestart).
+# The Catppuccin Mocha Ghostty theme's pastel palette makes the default whiptail
+# colors unreadable, so define an explicit scheme independent of the terminal palette.
+export NEWT_COLORS='
+root=white,blue
+window=black,lightgray
+border=black,lightgray
+title=black,lightgray
+textbox=black,lightgray
+button=black,cyan
+actbutton=white,blue
+compactbutton=black,lightgray
+listbox=black,lightgray
+actlistbox=black,cyan
+checkbox=black,lightgray
+actcheckbox=black,cyan
+entry=black,lightgray
+label=black,blue
+'
+
 # =============================================================================
 # Aliases
 # =============================================================================

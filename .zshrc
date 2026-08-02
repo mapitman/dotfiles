@@ -71,15 +71,23 @@ window=black,lightgray
 border=black,lightgray
 title=black,lightgray
 textbox=black,lightgray
+acttextbox=black,cyan
 button=black,cyan
 actbutton=white,blue
 compactbutton=black,lightgray
 listbox=black,lightgray
 actlistbox=black,cyan
+sellistbox=black,lightgray
+actsellistbox=black,cyan
 checkbox=black,lightgray
 actcheckbox=black,cyan
 entry=black,lightgray
+disentry=black,lightgray
 label=black,blue
+roottext=white,blue
+helpline=white,blue
+emptyscale=black,lightgray
+fullscale=black,cyan
 '
 
 # =============================================================================

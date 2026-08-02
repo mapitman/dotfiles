@@ -43,6 +43,7 @@ as the topic needs. They do not override the "detailed, thorough responses" rule
   explain the risk.
 - **Notes give information, not instructions**. Never bury an instruction in an aside.
 - Do not use em-dashes. Reach for the more precise punctuation the sentence actually needs instead: a colon to introduce, a semicolon to join related clauses, parentheses for an aside, or a full stop for a new sentence.
+- Do not use phrases like, "That's the smoking gun", etc.
 
 ## Git Commit Messages
 

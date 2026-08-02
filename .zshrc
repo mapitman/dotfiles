@@ -125,7 +125,7 @@ then
         if grep -Fiq "ubuntu" /etc/os-release
         then
             if type snap > /dev/null 2>&1; then echo 'Updating snaps...'; sudo snap refresh; fi
-            if type flatpak > /dev/null 2>&1; then echo 'Updating Flatpaks...'; flatpak update; fi
+            if type flatpak > /dev/null 2>&1; then echo 'Updating Flatpaks...'; flatpak update -y; fi
             echo 'Updating packages...'
             if type nala > /dev/null 2>&1; then sudo nala upgrade; else sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y; fi
             if type deb-get > /dev/null 2>&1; then deb-get update; deb-get upgrade; fi
@@ -140,7 +140,7 @@ then
             omz update
         elif grep -Fiq "debian" /etc/os-release
         then
-            if type flatpak > /dev/null 2>&1; then echo 'Updating Flatpaks...'; flatpak update; fi
+            if type flatpak > /dev/null 2>&1; then echo 'Updating Flatpaks...'; flatpak update -y; fi
             sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
             if type deb-get > /dev/null 2>&1; then deb-get update; deb-get upgrade; fi
             omz update

@@ -308,7 +308,7 @@ eval "$(zoxide init zsh)"
 # fzf (--zsh flag requires 0.48+)
 if command -v fzf > /dev/null 2>&1
 then
-    if [[ $(fzf --version | cut -d. -f2) -ge 48 ]]; then
+    if [[ $(fzf --version | awk '{print $1}' | cut -d. -f2) -ge 48 ]]; then
         source <(fzf --zsh)
     fi
 fi

@@ -51,6 +51,7 @@ _path_prepend "$HOME/.cargo/bin"
 [[ -e "/var/lib/flatpak/exports/bin" ]]            && _path_append  "/var/lib/flatpak/exports/bin"
 [[ -e "$HOME/android-studio/bin" ]]                && _path_append  "$HOME/android-studio/bin"
 [[ -e "$HOME/Android/Sdk/cmdline-tools/bin" ]]     && _path_append  "$HOME/Android/Sdk/cmdline-tools/bin"
+[[ -e "$HOME/Android/Sdk/platform-tools" ]]        && _path_append  "$HOME/Android/Sdk/platform-tools"
 
 export PATH
 

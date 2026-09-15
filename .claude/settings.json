@@ -20,7 +20,48 @@
   "effortLevel": "medium",
   "theme": "custom:custom-dark",
   "editorMode": "normal",
+  "remoteControlAtStartup": true,
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
-  "remoteControlAtStartup": true
+  "autoMode": {
+    "allow": [
+      "$defaults",
+      "Bash(./gradlew assembleDebug:*)",
+      "Bash(./gradlew testDebugUnitTest:*)",
+      "Bash(./gradlew lintDebug:*)",
+      "Bash(./gradlew installDebug:*)",
+      "Bash(mdview:*)"
+    ],
+    "soft_deny": [
+      "$defaults",
+      "Bash(./gradlew assembleRelease:*)",
+      "Bash(scripts/set-release-secrets.sh:*)"
+    ],
+    "environment": [
+      "### Org-wide",
+      "**Organization**: None configured",
+      "**Cloud provider(s)**: None configured",
+      "**Repository visibility**: PUBLIC — mapitman/mycasts-android (github.com:mapitman/mycasts-android.git)",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
+      "**Secrets management**: GitHub Actions repo secrets — RELEASE_KEYSTORE_BASE64, RELEASE_KEYSTORE_PASSWORD, RELEASE_KEY_ALIAS, RELEASE_KEY_PASSWORD (names only, set via scripts/set-release-secrets.sh)",
+      "**Default / protected branches**: main (default; protected via active ruleset \"main branch\")",
+      "**CI/CD deploy targets**: GitHub Actions — .github/workflows/build.yml (assembleDebug, testDebugUnitTest, lintDebug on push/PR to main); .github/workflows/release.yml (signed release APK + GitHub Release on vMAJOR.MINOR.PATCH tag push)",
+      "**Network posture**: None configured",
+      "**Source control**: mapitman/mycasts-android (github.com) and its configured remote(s) only",
+      "**Trusted internal domains**: None configured",
+      "**Trusted cloud buckets**: None configured",
+      "**Key internal services**: None configured",
+      "**Internal package registry**: None configured",
+      "**Sensitive data locations & audiences**: release signing keystore (*.keystore, gitignored) and CI secrets (RELEASE_KEYSTORE_BASE64, RELEASE_KEYSTORE_PASSWORD, RELEASE_KEY_ALIAS, RELEASE_KEY_PASSWORD) — restrict to release-signing workflow; scripts/set-release-secrets.sh pushes these via gh CLI, treat as credential-handling",
+      "**Data retention / declassification**: None configured",
+      "**Sensitive remote targets**: any namespace, host, or container whose name carries `prod` or `production` as a whole word or name segment",
+      "**Protected deployment namespaces / environments**: None configured — fall back to the Sensitive remote targets heuristic",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything whose name or tag carries `prod` or `production` as a whole word or name segment",
+      "### User-specific",
+      "**Primary use of Claude Code**: software development (Android/Kotlin app, mycasts-android)",
+      "**Trusted repo**: /home/mark/src/github/mapitman/mycasts-android (github.com:mapitman/mycasts-android.git) — PUBLIC repo, so only this repo's own work should be pushed there; confidential material (release-signing secrets) is never cleared into it regardless of visibility",
+      "**Org-specific CLIs**: None configured",
+      "routine under mapitman/mycasts-android prefix: gradlew, adb, mdview, gh (for this repo)"
+    ]
+  }
 }

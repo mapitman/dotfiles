@@ -1,0 +1,38 @@
+# herdr configuration
+# Key bindings mirror ~/.tmux.conf.
+
+[keys]
+# tmux: set-option -g prefix C-w
+prefix = "ctrl+w"
+
+# tmux: bind \ split-window -h  (panes side by side)
+split_vertical = "prefix+backslash"
+# tmux: bind - split-window -v  (panes stacked)
+split_horizontal = "prefix+minus"
+
+# tmux: bind r source-file ~/.tmux.conf
+reload_config = "prefix+r"
+# Herdr's default for prefix+r; moved so reload can use it.
+resize_mode = "prefix+shift+r"
+
+# tmux: bind -n M-left/M-Right/M-Up/M-Down select-pane
+focus_pane_left = "alt+left"
+focus_pane_right = "alt+right"
+focus_pane_up = "alt+up"
+focus_pane_down = "alt+down"
+
+# tmux: bind -n C-S-Right next-window / C-S-Left previous-window
+next_tab = "ctrl+shift+right"
+previous_tab = "ctrl+shift+left"
+
+# tmux: bind-key -r -T prefix C-Up/C-Down/C-Left/C-Right resize-pane
+resize_pane_left = "prefix+ctrl+left"
+resize_pane_down = "prefix+ctrl+down"
+resize_pane_up = "prefix+ctrl+up"
+resize_pane_right = "prefix+ctrl+right"
+
+# tmux defaults that differ from Herdr's.
+# tmux: prefix d (detach)
+detach = "prefix+d"
+# tmux: prefix , (rename window)
+rename_tab = "prefix+comma"

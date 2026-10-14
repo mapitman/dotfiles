@@ -1,6 +1,54 @@
 {
   "model": "sonnet",
+  "outputStyle": "Concise",
+  "permissions": {
+    "allow": [
+      "Bash(ls *)",
+      "Bash(ls)",
+      "Bash(grep *)",
+      "Bash(find *)",
+      "Bash(awk *)",
+      "Bash(cut *)",
+      "Bash(dotnet build *)",
+      "Bash(dotnet test *)",
+      "Bash(mdview *)",
+      "Bash(git status *)",
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(git diff)",
+      "Bash(git log *)",
+      "Bash(git log)",
+      "Bash(git show *)",
+      "Bash(git branch)",
+      "Bash(git branch -r)",
+      "Bash(git branch -a)",
+      "Bash(git branch -v)",
+      "Bash(git branch -vv)",
+      "Bash(git remote *)",
+      "Bash(git stash list)",
+      "Bash(git blame *)",
+      "Bash(git shortlog *)",
+      "Bash(yadm status *)",
+      "Bash(yadm diff *)",
+      "Bash(yadm log *)"
+    ]
+  },
   "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          { "type": "command", "command": "~/.claude/hooks/mdview-queue.sh record" }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "~/.claude/hooks/mdview-queue.sh open" }
+        ]
+      }
+    ],
     "PreToolUse": [
       {
         "matcher": "Bash",
@@ -18,7 +66,7 @@
     "command": "bash ~/.claude/statusline-command.sh"
   },
   "effortLevel": "medium",
-  "theme": "custom:custom-dark",
+  "theme": "dark-ansi",
   "editorMode": "normal",
   "remoteControlAtStartup": true,
   "inputNeededNotifEnabled": true,

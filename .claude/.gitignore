@@ -7,5 +7,16 @@
 !CLAUDE.md
 !settings.json
 !statusline-command.sh
+!hooks
+!hooks/mdview-queue.sh
+!skills
+!skills/writing-for-me
+!skills/writing-for-me/**
+!skills/herdr
+!skills/herdr/**
+!skills/herdr-guide
+!skills/herdr-guide/**
 !themes
 !themes/custom-dark.json
+!rules
+!rules/*.md

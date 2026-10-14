@@ -82,4 +82,12 @@ as the topic needs. They do not override the "detailed, thorough responses" rule
 - Use prose or a short bullet list
 - Omit if the subject is self-explanatory
 
+## GitHub Issues
+
+- When a commit or pull request addresses a GitHub issue, name the issue number in the commit message body and in the PR description.
+- Use a closing keyword for work that finishes the issue: `Closes #123`, `Fixes #123`, or `Resolves #123`. GitHub then closes the issue when the PR merges.
+- Use `Refs #123` or `Part of #123` for work that only addresses part of the issue.
+- Put one keyword on each issue number: `Closes #12, closes #13`, not `Closes #12, #13`.
+- Never put the issue number in the commit subject line. Put it in the body.
+
 @RTK.md

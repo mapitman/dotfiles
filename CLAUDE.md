@@ -22,7 +22,7 @@ Subject/body rules are enforced by the commit template at `~/.git-commit-templat
 2. Environment/PATH setup with conditional guards
 3. Tool initialization (nvm, pyenv, mise, zoxide, fzf, vivid, starship) — all guarded with `command -v` / `type` checks
 4. `~/.private` sourced near the end for machine-local secrets/overrides — never commit this file's contents into tracked config
-5. tmux auto-attach at the very bottom (skipped when already inside tmux, over SSH, or in the VS Code terminal)
+5. Herdr auto-launch/attach at the very bottom (skipped when already inside Herdr or tmux, over SSH, or in the VS Code terminal)
 
 ## Tracked `.claude/` files
 

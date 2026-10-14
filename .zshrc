@@ -333,18 +333,21 @@ eval "$(starship init zsh)"
 
 if [[ -e ~/.private ]]; then source ~/.private; fi
 
+# Herdr tab titles (no-op outside Herdr)
+[[ -r ~/.config/zsh/herdr-tabs.zsh ]] && source ~/.config/zsh/herdr-tabs.zsh
+
 # =============================================================================
-# tmux Auto-attach (keep last — launches a new process)
+# Herdr Auto-attach (keep last — launches a new process)
 # =============================================================================
 
-# Automatically attach to (or create) a default tmux session.
-# Skipped when already in tmux, an SSH session, or VS Code terminal.
-if [[ $TERM_PROGRAM != "tmux" \
-   && $TERM != "screen"* \
+# Automatically launch or attach to the persistent Herdr session.
+# Skipped when already in Herdr or tmux, an SSH session, or VS Code terminal.
+if [[ ${HERDR_ENV:-} != 1 \
+   && -z "$TMUX" \
    && $TERM_PROGRAM != "vscode" \
    && -z "$SSH_CONNECTION" \
    && -z "$SSH_CLIENT" ]] \
-   && command -v tmux > /dev/null 2>&1
+   && command -v herdr > /dev/null 2>&1
 then
-    tmux attach -t default > /dev/null 2>&1 || tmux new -s default
+    herdr
 fi

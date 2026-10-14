@@ -1,5 +1,9 @@
+onboarding = false
 # herdr configuration
 # Key bindings mirror ~/.tmux.conf.
+
+[theme]
+name = "catppuccin"
 
 [keys]
 # tmux: set-option -g prefix C-w
@@ -36,3 +40,23 @@ resize_pane_right = "prefix+ctrl+right"
 detach = "prefix+d"
 # tmux: prefix , (rename window)
 rename_tab = "prefix+comma"
+
+[ui]
+mouse_capture = true
+copy_on_select = true
+agent_panel_sort = "spaces"
+
+# Create tabs immediately with generated names instead of asking for a name.
+prompt_new_tab_name = false
+
+[ui.sound]
+enabled = true
+
+[ui.toast]
+delivery = "system"
+
+# Show each Claude agent's terminal title in the sidebar. Claude sets the title
+# from the current task, so two sessions in the same workspace stay distinct
+# without needing a manual `herdr agent rename`.
+[ui.sidebar.agents.rows_by_agent]
+claude = [["state_icon", "workspace", "tab"], ["terminal_title_stripped"], ["agent"]]
